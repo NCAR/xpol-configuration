@@ -22,17 +22,20 @@ setenv PRINTER color.gate.rtf
 setenv LANG C
 
 setenv HOST_OS LINUX_LROSE
-setenv BUILD_DIR $HOME/lrose
+setenv LROSE_CORE_DIR $HOME/git/lrose-core
+setenv LROSE_INSTALL_DIR $HOME/lrose
 setenv RAP_MAKE_INC_DIR $HOME/git/lrose-core/codebase/make_include
 setenv RAP_MAKE_BIN_DIR $HOME/git/lrose-core/codebase/make_bin
-setenv RAP_INC_DIR $BUILD_DIR/include
-setenv RAP_LIB_DIR $BUILD_DIR/lib
-setenv RAP_BIN_DIR $BUILD_DIR/bin
-setenv RAP_MAN_DIR $BUILD_DIR/man
-setenv RAP_DOC_DIR $BUILD_DIR/doc
-setenv RAP_SHARED_INC_DIR $BUILD_DIR/include
-setenv RAP_SHARED_LIB_DIR $BUILD_DIR/lib
-setenv RAP_SHARED_BIN_DIR $BUILD_DIR/bin
+setenv RAP_INC_DIR $LROSE_INSTALL_DIR/include
+setenv RAP_LIB_DIR $LROSE_INSTALL_DIR/lib
+setenv RAP_BIN_DIR $LROSE_INSTALL_DIR/bin
+setenv RAP_MAN_DIR $LROSE_INSTALL_DIR/man
+setenv RAP_DOC_DIR $LROSE_INSTALL_DIR/doc
+setenv RAP_SHARED_INC_DIR $LROSE_INSTALL_DIR/include
+setenv RAP_SHARED_LIB_DIR $LROSE_INSTALL_DIR/lib
+setenv RAP_SHARED_BIN_DIR $LROSE_INSTALL_DIR/bin
+
+setenv SYS_LDFLAGS -L/usr/lib/x86_64-linux-gnu/hdf5/serial
 
 # CVS
 
@@ -96,9 +99,9 @@ if ( -d $PROJ_DIR ) then
   end
 endif
 
-if ($?BUILD_DIR) then
-  if ( -d $BUILD_DIR/bin ) then
-    set path = ($path $BUILD_DIR/bin)
+if ($?LROSE_INSTALL_DIR) then
+  if ( -d $LROSE_INSTALL_DIR/bin ) then
+    set path = ($path $LROSE_INSTALL_DIR/bin)
   endif
 endif
 
