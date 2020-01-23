@@ -1,0 +1,22 @@
+#! /bin/csh
+
+set today = `date -u +%Y%m%d`
+
+mkdir -p $PROJ_DIR/data/logs/errors
+cd $PROJ_DIR/data/logs/errors
+mkdir -p $today
+cd $today
+
+running "xpold"
+if ($status == 1) then
+  xpold >>& xpold.log &
+endif
+
+#cd $PROJ_DIR/data/logs
+#running "xpold"
+#if ($status == 1) then
+#  xpold |& \
+#	LogFilter -d $ERRORS_LOG_DIR -p xpold >& /dev/null &
+#endif
+
+

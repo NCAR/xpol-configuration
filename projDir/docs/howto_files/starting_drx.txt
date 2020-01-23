@@ -1,0 +1,156 @@
+Stopping processes on xpol server
+=================================
+
+Before starting DRX, make sure the processes on xpol are stopped.
+
+  Log in to xpol as 'radarop' using the -X option
+  Run 'stop_all'
+
+Starting up DRX server
+======================
+
+Log in to drx server as user 'radarop'.  You can just type 'drx'.
+
+Run:
+
+  start_all
+
+to start up the basic system.
+
+The main app running on 'drx' is:
+
+  xpold
+
+This is the server that controls the radar, and acquires the data.
+
+We run apps on 'xpol' that contact this server.
+
+Starting the radar
+==================
+
+On 'drx', run:
+
+  start_xpol_control
+
+This will bring up the control GUI.  You may want to resize the window to
+get rid of any scrollbars.
+
+Go through the following steps:
+
+(a) Connect to the xpold server
+-------------------------------
+
+Click 'Connect' - this connects xpol_control to xpold.
+
+(b) Make sure the server is in run mode.
+----------------------------------------
+
+Set 'Server state' to 'Run'
+Click 'Apply' in the lower center of the GUI.  (This will be the apply
+that you click unless otherwise specified below.)
+
+After hitting Apply, you will see a message saying that the
+server configuration is updating. You need to wait until
+this message goes away.
+
+(c) Point the antenna vertically
+--------------------------------
+
+Make sure the antenna is pointed vertically up, so there is
+no radiation hazard. This is done in the 'Pedestal' section.
+
+Set:
+
+  Action: Point
+  Az position: 0
+  El position: 90
+  Az velocity: 10
+  El velocity: 10
+
+  Click 'Apply' in the top right-hand window.
+
+Make sure the elevation is close to 90 degrees - i.e. the 
+antenna is pointing vertically.
+
+  Click 'Stop' to set the brakes.
+
+(d) Turn on dry air power, to keep the antenna ventilated.
+---------------------------------------------------------
+
+  Click on 'Dry air power' to get a check mark.
+  Click 'Apply'.
+
+(e) Turn on the transmitter
+---------------------------
+
+  Click on 'RF power' to get a check mark.
+  Set 'Frequency tracking' to 'Manual'.
+  Click 'Apply'
+
+  Set 'LO Frequency' to 17.0
+  Click 'Apply'.
+
+  Monitor the 'Power:' value. This starts around -85 dBm.
+  The power should increase to around -12 dBm.
+  This can take a few minutes as the transmitter warms up.
+
+  Once the Power is around -12:
+
+    Set 'Frequency tracking' to 'Auto'.
+
+  This will set on the automatic frequency control on to track the
+  magnetron frequency and keep the power at an optimum value.
+
+  Also set the following values:
+       Range resolution:   75m
+       Filter bandwidth:    2MHz
+       Range gate spacing: 75m
+  Then click 'Apply'
+
+Ensure safety radius
+====================
+
+The radar has a 30 meter safety radius. This applies when the antenna
+is pointing below 10 degrees or so.
+
+Make sure no one is close to the radar before turning it on.
+
+Start processes on xpol server
+==============================
+
+  Log in to xpol
+  Run 'start_all'
+
+This will start up the data acquisition and xpol control.
+
+Run:
+
+  start_RadMon.xpol
+  start_RadMon.xpol_raw
+
+to monitor the FMQ data streams..  It can take a little while before you
+see data in the RadMon windows.  You will first see data in the xpol_raw
+window as the raw data starts to flow.  The xpol window will only show data
+that is actually within our scan strategy.
+
+Run:
+
+  start_HawkEye.xpol
+
+to see the beam-by-beam data.
+
+Run CIDD on vapor to check volume data
+======================================
+
+Log into vapor as ice.
+
+Run:
+
+  start_CIDD.xpol_vapor
+
+to see the CIDD display.
+
+
+When everything is up and running, kill the xpol_control GUI.
+Note that mulitple versions of the GUI can run at the same time
+so killing the GUI should save some confusion.

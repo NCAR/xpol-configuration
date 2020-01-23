@@ -1,0 +1,10 @@
+#! /bin/csh
+
+$HOME/xpolProjDir/display/scripts/set_font_path >& /dev/null
+
+cd $HOME/xpolProjDir/display/params
+
+setenv DATA_HOST vapor.rap.ucar.edu
+
+CIDD -p CIDD.xpol_vapor -i xpol_vapor -font fixed >& /dev/null &
+

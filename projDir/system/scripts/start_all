@@ -1,0 +1,49 @@
+#! /bin/csh 
+
+#
+# Start up entire system...
+#
+
+mkdir -p $RESTART_LOG_DIR
+mkdir -p $ERRORS_LOG_DIR
+mkdir -p $DATA_DISTRIB_LOG_DIR
+
+#
+# start the xpold server if applicable
+#
+
+if (`get_host_type` == "drx") then
+
+  start_xpold
+
+else
+
+#
+# start the procmap first so we can watch everything come up
+#
+
+start_procmap
+
+#
+# do a fast-start from the process list. We sleep between starts
+# to prevent overloading the system
+#
+ 
+procmap_list_start -sleep 0 \
+  -proc_list $PROJ_DIR/control/proc_list
+
+#
+# starting up the auto_restart should start up anything
+# that didn't come up during the fast-start
+#
+start_auto_restart
+
+#
+# install the crontab which insures that procmap and
+# the auto_restarter are always going
+#
+install_crontab
+
+endif
+
+

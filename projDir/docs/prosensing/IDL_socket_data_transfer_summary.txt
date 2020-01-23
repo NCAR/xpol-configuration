@@ -1,0 +1,791 @@
+; First the various structure blocks:
+
+  head={ $
+    site:bytarr(1024), $    ; operator notes 1024 characters                    1024
+    az_off:0D, $        ; operator entered absolute azimuth offset                    8
+    rcb: 0L, $          ; RCB present true/False                4
+    cfw:0D, $         ; clutter filter width m/s                8
+    cave:0L, $          ; no of groups in clutter filtering interval      4
+    drate:0D, $         ; data rate                       8
+    fftl:0L, $          ; FFT Length                      4
+    fftwindow:0L, $       ; FFT window type (0=Bartlett, 1=Blackman, 2=Hamming, 3=Hanning, 4=Rect.)                   4
+    res1:0L, $          ;                             4
+    nrecords:0L, $        ; new file start: n records               4
+    nscans:0L, $        ; new file start: n scans               4
+    recsize:0L, $       ; new file start file size (MB)             4
+    rectime:0L, $       ; new file start time (sec)               4
+    bitflags:0L, $        ; new file start bit flags                4
+    res2:0L, $          ;                           4
+    bw:0D, $          ; dig rec filter bandwidth                8
+    freqthres:0D, $       ; Freq tracking adjust thres (% of bandwidth)       8
+    freqadj:0L, $       ; Freq adjust  mode                   4
+    res3:0L, $          ;                           4
+    pri3:0L, $          ; PRI3 - group spacing (us)               4
+    hdbz:0D, $          ; H dBZ-dBm @ 1 km offset               8
+    hnoisedBm:0D, $       ; H noise power                     8
+    inttime:0D, $       ; Integration time                    8
+    freqerror:0D, $       ; Freq error                      8
+    freq:0D, $          ; IF Freq.                        8
+    rmax:0D, $          ; max. sampled range meters               8
+    nrg:0L, $         ; No. of Range Gates                  4
+    nps:0L, $         ; No. of pulses in a group                4
+    postdec:0L, $       ; Post decimation                   4
+    postave:0L, $       ; No. of clutter filtering intervals in ave. interval 4
+    pri1:0L, $          ; PRI1 (us)                       4
+    pri2:0L, $          ; PRI2 (us)                       4
+    prit:0L, $          ; PRIT (us)                       4
+    cicdec:0L, $        ; CIC decimation (on-board)               4
+    pl:0D, $          ; Pulse Length (m)                    8
+    res5:0L, $          ;                             4
+    rgs:0D, $         ; Range Gate Spacing                  8
+    res6:0L, $          ;                           4
+    rres:0D, $          ; Range Resolution (m/gate)               8
+    recfftmoments:0L, $     ; Rec. Moments                      4
+    recraw:0L, $        ; Rec. Raw                        4
+    recenable:0L, $       ; Rec. Enable                     4
+    servmode:0L, $        ; Serv. Mode (PP, DPP, FFT, FFT2, FFT2I)        4
+    res7:0L, $          ;                           4
+    servstate:0L, $       ; Serv. State (Idle, Run, Record)           4
+    res8:0L, $          ;                           4
+    softdec:0L, $       ; Post Decimation                   4
+    sumpower:0L, $        ; Sum Powers in PP or DPP mode (yes/no)         4
+    ave:0L, $           ; Total number of groups averaged           4
+    txdel:0L, $         ; TX Delay (ns)                     4
+    txdelpwmult:0L, $     ; TX del PW mult                    4
+    txcenter:0L, $        ; TX center (ns)                    4
+    txcenteroffset:0L, $    ; TX center offset (ns)                 4
+    txswdel:0L, $       ; TX SW Del. (ns)                   4
+    txswholdoff:0L, $     ; TX SW Hold Off (ns)                 4
+    cfon:0L, $          ; Clutter Flter (on/off)                4
+    vdbz:0D, $          ; V dBZ-dBm @ 1 km                    8
+    vnoisedbm:0D, $       ; V noise dBm                     8
+    zrg:0D $          ; Zero Range Gate Index                 8
+    }
+
+
+  head2={ $         ; these few parameters are at the end of the file header, but not when getting data over the network
+    scan_type:0L, $  ; scan type 3=Point, 5=PPI, 6=RHI, 7=Az Ras, 8=El Ras, 9=Vol. 4 bytes
+    host_ts:lonarr(2), $    ; Time stamp sec                    2*4
+    hostname:bytarr(8), $
+    spare:lonarr(2) $   ; spare
+    }
+
+
+  stat={ $
+    host_ts: lonarr(2), $       ; host time stamp                   2*4   Xpol stat
+      rcb_temp: lonarr(4), $      ; temperatures                      4*4
+      rcb_incl: lonarr(2), $      ; inclinometers                     2*4
+      rcb_fuel: 0L, $         ; fuel level                      4
+      cpu_temp: 0., $         ; cpu temp (not working yet)      4
+    scan_type: 0L, $        ; scan type 3=Point, 5=PPI, 6=RHI, 7=Az Ras, 8=El Ras, 9=Vol. 4 bytes
+    tx_power_sample:0., $     ; Tx pulse sample power
+    spare: lonarr(5) $        ; spare                         7*4
+      }
+
+  ped={ $
+    az:0D, $
+      el:0D, $
+      az_vel:0D, $
+      el_vel:0D $
+      }
+
+  ped_current={ $
+      motor_current_az: 0D, $
+      motor_current_el: 0D $
+      }
+
+  gps1={ $
+    lath:0L, $ ; 0=undefined, ascii 78 = 'N' north, ascii 83 = 'S' south
+      lat:0D, $
+      lonh:0L, $ ; 0=undefined, ascii 69 = 'E' east, ascii 87= 'W' west
+      lon:0D $  ; deg
+    }
+  gps2={ $
+      headr: 0L, $ ; 0= undefined, acsii 84 = 'T' True north, ascii 77 = 'M' magnetic
+      head:0D, $ ; deg
+      speed:0D $ ; km/hr
+      }
+
+
+  rec_head = { $        ; format changed on June 15, 2009
+    gga:bytarr(96), $         ; GPS GGA message text                  96    GPS
+    gps_ts: lonarr(2), $        ; gps time stamp                    2*4
+    data_type: 0L, $          ; Data Type                       4   Data stat
+    data_size: 0L $         ; Data Size                       4
+  }
+
+  display={ $
+    r:fltarr(1), $ ; range gate range vector
+    thet:fltarr(n_beams), $ ; M element display angle (az or el)
+    thet_last:0., $
+    dispdata:0., $    ; active data matrix on display nrg x M matrix
+    fname:'', $
+    bsize:LONG(newbsize_val), $ ; display update after reading bsize number of records. Also set in the 'Connect' interrupt code segment, to 10 for socket and to 180 for file.
+    az_old:0D, $ ; used to display pedestal position in pos window
+    el_old:0D,  $ ; used to display pedestal position in pos window
+    azvel_old:0D, $ ; used to display pedestal position in pos window
+    elvel_old:0D,  $ ; used to display pedestal position in pos window
+    ant_bw:ant_bw, $ ; radar antenna 3 dB beamwidth
+    n_beams:n_beams $ ; number of azimuth bins used in display
+    }
+
+
+  drec={ $
+    mode:0L, $
+    tsource:0L, $
+    pcifreq:0L, $
+    adclockfreq:0L, $
+    ndmadesc:0L, $
+    ndmapack:0L, $
+    dmasize:0L, $
+    blocksize:0L, $
+    res1:0L, $
+    pci_inter: 0D,$
+    res2:0L, $
+    res3:0L, $
+    state:lonarr(2), $
+    source:lonarr(2), $
+    skipcount:lonarr(2), $
+    cicdec:lonarr(2), $
+    firdec:lonarr(2), $
+    postdec:lonarr(2), $
+    ncofreq:lonarr(2) $
+    }
+
+  data_head={ $               ;data header block
+    type:0L, $
+    tsec:0L, $
+    tusec:0L, $
+    drec:drec, $      ; drec structure from above
+    digrec_fgain:0D, $
+    ave_int:0L, $
+    archive_index:0L, $
+    block_index:lonarr(2), $
+    nblocks:0L, $
+    blocks:0L, $
+    blockdim:0L, $        ; data block size
+    blockdimsize:lonarr(4) $
+    }
+
+
+
+							Case head.servmode of
+								0: begin ; PP
+							    	record_size=long(rec_head_size+4*10*head.nrg); 4 power, 2 complex PP, 1 complex Cross-Correlation
+							    	drec = { $
+								        pow: fltarr(head.nrg, 4), $ ; nrg Vch 1st pulse, nrg Vch 2nd pulse, nrg Hch 1st pulse, nrg Hch 2nd pulse
+								        pp: complexarr(head.nrg, 2), $ ; nrg Vch pulse pair, nrg Hch pulse pair
+								        cc: complexarr(head.nrg) $ ; nrg V-H cross correlation (averaged 1st and 2nd pulse data)
+							           }
+							    	IF head.sumpower EQ 1 THEN BEGIN
+							    		record_size=long(rec_head_size+4*8*head.nrg); 2 power, 2 complex pp, 1 complex cc
+										drec = { $
+									        pow: fltarr(head.nrg, 2), $
+									        pp: complexarr(head.nrg, 2), $
+									        cc: complexarr(head.nrg) $
+							           		}
+									ENDIF
+
+									IF head.recraw EQ 1 THEN BEGIN
+							        	record_size=long(rec_head_size+4*2*2*head.nrg*2); V/H, 2 pulses, rg, I/Q
+							      		drec = { $
+								            V: complexarr(head.nrg, 2), $
+								            H: complexarr(head.nrg, 2) $
+							              }
+							      	ENDIF
+								end
+								1: begin ; DPP
+								    record_size=long(rec_head_size+4*16*head.nrg); 6 power, 4 complex PP, 1 complex Cross-Correlation
+								    drec = { $
+								        pow: fltarr(head.nrg, 6), $
+								        pp: complexarr(head.nrg, 4), $
+								        cc: complexarr(head.nrg) $
+							           }
+							    	IF head.sumpower EQ 1 THEN BEGIN
+							    		record_size=long(rec_head_size+4*8*head.nrg); 2 power, 2 complex pp, 1 complex cc
+										drec = { $
+									        pow: fltarr(head.nrg, 2), $
+									        pp: complexarr(head.nrg, 2), $
+									        cc: complexarr(head.nrg) $
+							           		}
+									ENDIF
+									IF head.recraw EQ 1 THEN BEGIN
+								        record_size=long(rec_head_size+4*2*3*head.nrg*2); V/H, all ave, 3 pulses, rg, I/Q
+								      	drec = { $
+								            V: complexarr(head.nrg, 3), $
+								            H: complexarr(head.nrg, 3) $
+								              }
+							      	ENDIF
+
+								end
+								2: begin ; FFT
+								    record_size=long(rec_head_size+4*4*head.nrg*head.fftl); 2 power spectrum, 1 complex cross-spectrum
+								    drec = { $
+									        pow: fltarr(head.fftl, head.nrg, 2), $
+									        cc: complexarr(head.fftl, head.nrg) $
+							           		}
+
+								    IF head.recraw EQ 1 THEN BEGIN
+								        record_size=long(rec_head_size+4*2*head.fftl*head.nrg*2); V/H, all ave, fftl pulses, rg, I/Q
+								      	drec = { $
+								            V: complexarr(head.nrg, head.fftl), $
+								            H: complexarr(head.nrg, head.fftl) $
+								              }
+								    ENDIF
+								end
+								3: begin ; FFT2
+								    record_size=long(rec_head_size+4*8*head.nrg*head.fftl); 4 power spectrum, 2 complex cross-spectrum
+								    drec = { $
+									        pow: fltarr(head.fftl, head.nrg, 4), $
+									        cc: complexarr(head.fftl, head.nrg, 2) $
+							           		}
+							      	IF head.recraw EQ 1 THEN BEGIN
+							        	record_size=long(rec_head_size+4*2*2*head.fftl*head.nrg*2); V/H, all ave, 2*fftl pulses, rg, I/Q
+							      		drec = { $
+								            V: complexarr(head.nrg, 2*head.fftl), $
+								            H: complexarr(head.nrg, 2*head.fftl) $
+								              }
+							      	ENDIF
+								end
+								4: begin ; FFT2I
+								    record_size=long(rec_head_size+4*8*head.nrg*head.fftl); 4 power spectrum, 2 complex cross-spectrum
+								    drec = { $
+									        pow: fltarr(head.fftl, head.nrg, 4), $
+									        cc: complexarr(head.fftl, head.nrg, 2) $
+							           		}
+							      	IF head.recraw EQ 1 THEN BEGIN
+							        	record_size=long(rec_head_size+4*2*2*head.fftl*head.nrg*2); V/H, all ave, 2*fftl pulses, rg, I/Q
+							      		drec = { $
+								            V: complexarr(head.nrg, 2*head.fftl), $
+								            H: complexarr(head.nrg, 2*head.fftl) $
+								              }
+							      	ENDIF
+								end
+							ENDCASE
+
+		data={ $	; data block
+			file_head_size:st.data.file_head_size , $ ; file header size (fixed)
+			rec_head_size:st.data.rec_head_size, $ ; record header size (fixed)
+			record_size:record_size, $ ; total record size (depends on mode)
+			nrec:st.data.nrec, $ ; number of records in file
+			crec:st.data.crec, $ ; displayed record count
+			v_noise:0., $ ; V channel noise floor
+			h_noise:0., $ ; H channel noise floor
+			drec:drec $ ; data record structure (depends on mode)
+			}
+
+		
+;*****************************************************************************************************
+; Here is the procedure and subroutines for reading status and data from the server over a socket connection:
+                 
+ socket, source, st.wi.ip_list(st.wi.ip_index), 3000, /GET_LUN, READ_TIMEOUT=5 ; Open a socket to an IP address and Port
+ st.wi.source=source ;save the socket ID in a global structure variable
+ 
+ ;Get configuration structure from server
+	WHILE temp NE 66L and counter LT 10 DO BEGIN ; Try to get a network response from the server 10 times, then give up
+		writeu, st.wi.source, 8L		; request (2L) configuration; (8L) configuration with status
+		readu, st.wi.source, temp
+			st.wi.netres=temp
+			counter=counter+1
+			wait, 0.2
+	END
+
+print, counter, st.wi.netres 	; read NETRES_OK (66 - a long integer) reply
+
+	IF st.wi.netres EQ 66L THEN BEGIN
+		readu, st.wi.source, temp ; read the total conf size (number of bytes) - should be 1324+8
+			;print, 'Conf. Total Size: ', temp
+		readu, st.wi.source, temp ; read the configuration archive index
+			;print, 'Conf. Archive Index: ', temp
+			st.wi.archive_index=temp   ;keep the archive index to read data records
+		readu, st.wi.source, temp ; read conf size (number of bytes) - should be 1324
+			;print, 'Conf. Size: ', temp
+
+		readu, st.wi.source, temp ; read conf size (number of bytes) - should be 1324
+			;print, 'Stat. Size: ', temp
+
+		head=st.head
+		readu, st.wi.source, head ; read the configuration structure
+			;print, 'Head', head
+
+		stat=st.stat
+		readu, st.wi.source, stat
+			;print, stat
+
+		readu, st.wi.source, temp ; read NETRES_OK (66 - a long integer) reply
+
+		st.wi.netres=temp
+		IF temp EQ 66 THEN 	st={wi:st.wi, 	head:head, 	head2:st.head2, stat:stat, ped:st.ped, ped_current:st.ped_current, gps1:st.gps1, gps2:st.gps2, rec_head:st.rec_head, 	display:st.display, 	data_head:st.data_head, data:st.data} ;Stash
+
+	ENDIF
+
+ return, st
+END
+;************************************************************************
+
+FUNCTION request_socket_data, st ; This is via socket data header
+
+    writeu, st.wi.source, 7L  ; request data
+    writeu, st.wi.source, 60L ; send the request structure size
+    writeu, st.wi.source, 44L ; send the requestd data type
+    writeu, st.wi.source, -1L ; get oldest available data block that we haven't yet seen
+    writeu, st.wi.source, 1L  ; don't use 'block step length' feature
+    writeu, st.wi.source, 1L  ; don't use 'block seen step length' feature
+    writeu, st.wi.source, 1L  ; request 1 data block
+    writeu, st.wi.source, long([0, 0, 0, 0])  ; request entire FFT matrix (meaning in FFT mode only)
+    writeu, st.wi.source, long([-1, -1, -1, -1])  ; request entire FFT matrix (meaning in FFT mode only)
+    writeu, st.wi.source, st.wi.archive_index ; send the presumed configuration archive index
+    writeu, st.wi.source, 1L  ; 0=double precision data; 1=float data
+
+ 	return, st
+END
+;************************************************************************
+
+
+FUNCTION get_stat, st ; This is via socket status block
+
+	temp=0L
+	writeu, st.wi.source, 4L  ; request status
+
+	readu, st.wi.source, temp ; read initial response: NETRES_OK (66 - a long integer) reply
+		;print, '1st netres in stat:  ', temp
+
+	IF temp EQ	66 THEN BEGIN
+			readu, st.wi.source, temp ; read total response size
+				;print, 'Resp. Size:  ', temp ; Stat size is 72
+
+			readu, st.wi.source, temp ; read status structure size
+				;print, 'Size:  ', temp ; Stat size is 68
+	 		stat=st.stat ;header structure block
+	 		readu, st.wi.source, stat
+	 		st={wi:st.wi, 	head:st.head, head2:st.head2,   stat:stat, ped:st.ped, ped_current:st.ped_current, gps1:st.gps1, gps2:st.gps2,	rec_head:st.rec_head, 	display:st.display, 	data_head:st.data_head, data:st.data} ;Stash
+			readu, st.wi.source, temp ; read final status code (66 is OK)
+	ENDIF
+
+	st.wi.netres=temp
+
+
+ return, st
+END
+;************************************************************************
+
+
+
+
+							
+; get socket data
+								st=request_socket_data(st) ; call the "request socket data" subroutine
+
+								temp=0L
+								readu, st.wi.source, temp ; read initial response: NETRES_OK (66 - a long integer) reply
+									st.wi.netres=temp
+
+								CASE st.wi.netres OF
+									66L: BEGIN ; OK
+										readu, st.wi.source, temp ; read data structure size (240 + blocks*block size)
+
+								 			data_head=st.data_head ;header structure block
+										readu, st.wi.source, data_head
+
+											ped=st.ped
+										readu, st.wi.source, ped
+
+											ped_current=st.ped_current ;this info is only in the socket data stream - not recorded in file
+										readu, st.wi.source, ped_current
+
+											gps1=st.gps1
+										readu, st.wi.source, gps1
+
+	  										alt=0D	; Altitude in meters
+										readu, st.wi.source, alt ;altitude is only in the socket data stream
+
+										gps2=st.gps2
+										readu, st.wi.source, gps2
+
+
+										st={wi:st.wi, 	head:st.head, head2:st.head2,   stat:st.stat, ped:ped, ped_current:ped_current, gps1:gps1, gps2:gps2,	rec_head:st.rec_head, 	display:st.display, 	data_head:data_head, data:st.data} ;Stash
+
+	 									; read data
+										data=st.data.drec
+									 	readu, st.wi.source, data	; read the the data record
+
+										readu, st.wi.source, temp ; read initial response: NETRES_OK (66 - a long integer) reply
+										st.wi.netres=temp
+
+
+										END
+									67L: BEGIN ;
+										WIDGET_CONTROL, st.wi.drawID, /CLEAR_EVENTS ; clear any existing timer events to the draw widget
+										WIDGET_CONTROL, st.wi.displayID, /CLEAR_EVENTS ; clear any existing timer events to the draw widget
+										WIDGET_CONTROL, st.wi.check_socket_data_readyID, /CLEAR_EVENTS ; clear any existing timer events to the draw widget
+
+										WIDGET_CONTROL, st.wi.connectID, TIMER=1. ; read the server configuration again in 1 sec
+										tv, intarr(228,13)
+										xyouts, 0., 0. , "CHANGING CONFIGURATION", ALIGNMENT=0., COLOR=200, charsiz=1.4, charthick=1.5, /NORMAL
+										i = (st.display.bsize<(st.data.nrec-st.data.crec)) + 1 ; to get out of this WHILE loop
+										END
+
+									70L: BEGIN ;
+										print, 'Unknown data type!'
+										END
+									72L: BEGIN ;
+										;print, 'GET DATA: Requested data type is not available!'
+										END
+									73L: BEGIN ;
+										WIDGET_CONTROL, st.wi.drawID, /CLEAR_EVENTS ; clear any existing timer events to the draw widget
+										WIDGET_CONTROL, st.wi.displayID, /CLEAR_EVENTS ; clear any existing timer events to the draw widget
+										WIDGET_CONTROL, st.wi.check_socket_data_readyID, /CLEAR_EVENTS ; clear any existing timer events to the draw widget
+										tv, intarr(228,13)
+										xyouts, 0., 0. , "NEW CONFIGURATION", ALIGNMENT=0., COLOR=200, charsiz=1.4, charthick=1.5, /NORMAL
+										WIDGET_CONTROL, st.wi.connectID, TIMER=1. ; read the server configuration again in 1 sec
+
+										i = (st.display.bsize<(st.data.nrec-st.data.crec)) + 1 ; to get out of this WHILE loop
+
+										END
+									ENDCASE
+
+
+								ENDELSE
+
+								IF st.wi.ip_list(st.wi.ip_index) EQ 'File' OR st.wi.netres EQ 66 THEN BEGIN
+
+
+									nweight=0.1 ; noise running average weight
+									i=i+1
+
+
+									;print, i, st.data.crec, ped.el, ped.az, (stat.rcb_incl-446.9)*0.085
+
+									;***********************
+									st.head.hdBz=67.7
+									st.head.vdBz=67.7
+									n_noise_gates = 2
+									;***********************
+
+
+
+										CASE st.head.servmode OF
+										    0: BEGIN ; PP
+										          dBm=data.pow
+										          pp = data.pp
+										          cc = data.cc
+
+														Velv=0.03*atan(pp(*,0), /phase)/(4.E-6*st.head.pri1*!pi) ;
+														Velh=0.03*atan(pp(*,1), /phase)/(4.E-6*st.head.pri1*!pi) ;
+														Phi=atan(cc, /phase)
+
+													; Zv
+														IF st.data.v_noise EQ 0. THEN st.data.v_noise = mean(dBm(0:n_noise_gates,0))
+
+
+														v_noise=(1.-nweight)*st.data.v_noise+nweight*mean(dBm(0:n_noise_gates,0))
+
+														st.data.v_noise=v_noise
+
+															IF st.head.sumpower EQ 0 THEN thresv=v_noise*(10^(0.1*st.wi.thres_val))/SQRT(st.head.cave*st.head.postave)
+															IF st.head.sumpower EQ 1 THEN thresv=v_noise*(10^(0.1*st.wi.thres_val))/SQRT(2*st.head.cave*st.head.postave)
+
+										          		Zv=(dBm(*,0)-v_noise)>thresv
+
+										          		Sv=0.03*SQRT((1-(ABS(pp(*,0))/Zv))>0.)/(2*!pi*SQRT(2)*1E-6*st.head.pri1)
+										          		Sv(where(Zv EQ thresv)>0)=!values.F_nan
+
+													; Zh
+													IF st.head.sumpower EQ 1 THEN BEGIN
+															IF st.data.h_noise EQ 0. THEN st.data.h_noise = mean(dBm(0:n_noise_gates,1))
+
+															h_noise=(1.-nweight)*st.data.h_noise+nweight*mean(dBm(0:n_noise_gates,1))
+															;h_noise=(1.-nweight)*st.data.h_noise+nweight*mean(dBm((st.head.nrg-5):(st.head.nrg-1),1))
+
+														st.data.h_noise=h_noise
+															thres=h_noise*(10^(0.1*st.wi.thres_val))/SQRT(2*st.head.cave*st.head.postave)
+										          		Zh=(dBm(*,1)-h_noise)>thres
+
+													ENDIF
+
+										            IF st.head.sumpower EQ 0 THEN BEGIN
+															IF st.data.h_noise EQ 0. THEN st.data.h_noise = mean(dBm(0:n_noise_gates,2))
+
+										            		h_noise=(1.-nweight)*st.data.h_noise+nweight*mean(dBm(0:n_noise_gates,2))
+										            		;h_noise=(1.-nweight)*st.data.h_noise+nweight*mean(dBm((st.head.nrg-5):(st.head.nrg-1),2))
+
+														st.data.h_noise=h_noise
+										            		thres=h_noise*(10^(0.1*st.wi.thres_val))/SQRT(st.head.cave*st.head.postave)
+										            	Zh=(dBm(*,2)-h_noise)>thres
+													 ENDIF
+
+
+										            	Sh=0.03*SQRT((1-(ABS(pp(*,1))/Zh))>0.)/(2*!pi*SQRT(2)*1E-6*st.head.pri1)
+										          		Sh(where(Zh EQ thres)>0)=!values.F_nan
+
+										          		Rvh=abs(cc)/SQRT(Zh*Zv)
+														Rvh(where(Zh EQ thres OR Zv EQ thresv)>0)=!values.F_nan
+
+														Zv(where(Zv EQ thresv)>0)=!values.F_nan
+										          		dBZv=10*alog10(Zv)+20*alog10(st.display.r>1e-1)-10*alog10(st.head.rres)+st.head.vdBz;st.head.vdbz-(v_noise-st.head.hnoisedbm)
+														;dBZv=10*alog10(Zv)-10*alog10(st.head.rres)+st.head.vdBz;st.head.vdbz-(v_noise-st.head.hnoisedbm)
+
+										          		Zh(where(Zh EQ thres)>0)=!values.F_nan
+										          		dBZh=10*alog10(Zh)+20*alog10(st.display.r>1e-1)-10*alog10(st.head.rres)+st.head.hdBz;st.head.hdbz-(h_noise-st.head.hnoisedbm)
+
+
+
+										    END
+										    1: BEGIN ; DPP
+													dBm=data.pow
+										          	pp = data.pp
+										          	cc = data.cc
+
+													Velv=0.03*atan(pp(*,0), /phase)/(4.E-6*st.head.pri1*!pi) ;first pulse pair velocity
+													Velv2=0.03*atan(pp(*,1), /phase)/(4.E-6*st.head.pri2*!pi) ;second pulse pair velocity
+
+													Velh=0.03*atan(pp(*,2), /phase)/(4.E-6*st.head.pri1*!pi) ;
+													Velh2=0.03*atan(pp(*,3), /phase)/(4.E-6*st.head.pri2*!pi) ;
+
+													Phi=atan(cc, /phase)
+
+													; Zv
+														v_noise=(1.-nweight)*st.data.v_noise+nweight*mean(dBm(0:n_noise_gates,0))
+														st.data.v_noise=v_noise
+															IF st.head.sumpower EQ 0 THEN thresv=v_noise*(10^(0.1*st.wi.thres_val))/SQRT(st.head.cave*st.head.postave)
+															IF st.head.sumpower EQ 1 THEN thresv=v_noise*(10^(0.1*st.wi.thres_val))/SQRT(3*st.head.cave*st.head.postave)
+
+										          		Zv=(dBm(*,0)-v_noise)>thresv
+
+														Sv=0.03*SQRT((1-(ABS(pp(*,0))/Zv))>0.)/(2*!pi*SQRT(2)*1E-6*st.head.pri1)
+														Sv(where(Zv EQ thresv)>0)=!values.F_nan
+
+
+													; Zh
+													IF st.head.sumpower EQ 1 THEN BEGIN
+															h_noise=(1.-nweight)*st.data.h_noise+nweight*mean(dBm(0:n_noise_gates,1))
+														st.data.h_noise=h_noise
+															thres=h_noise*(10^(0.1*st.wi.thres_val))/SQRT(3*st.head.cave*st.head.postave)
+										          		Zh=(dBm(*,1)-h_noise)>thres
+
+														Sh=0.03*SQRT((1-(ABS(pp(*,2))/Zh))>0.)/(2*!pi*SQRT(2)*1E-6*st.head.pri1)
+										          		Sh(where(Zh EQ thres)>0)=!values.F_nan
+
+										          		Rvh=abs(cc)/SQRT(Zh*Zv)
+														Rvh(where(Zh EQ thres OR Zv EQ thresv)>0)=!values.F_nan
+
+										          		Zv(where(Zv EQ thresv)>0)=!values.F_nan
+										          		dBZv=10*alog10(Zv)+20*alog10(st.display.r>1e-20)-10*alog10(st.head.rres)+st.head.vdBz;st.head.vdbz-(v_noise-st.head.hnoisedbm)
+
+										          		Zh(where(Zh EQ thres)>0)=!values.F_nan
+										          		dBZh=10*alog10(Zh)+20*alog10(st.display.r>1e-20)-10*alog10(st.head.rres)+st.head.hdBz; st.head.hdbz-(h_noise-st.head.hnoisedbm)
+										       		ENDIF
+										            IF st.head.sumpower EQ 0 THEN BEGIN
+										            		h_noise=(1.-nweight)*st.data.h_noise+nweight*mean(dBm(0:n_noise_gates,3))
+														st.data.h_noise=h_noise
+															thres=h_noise*(10^(0.1*st.wi.thres_val))/SQRT(st.head.cave*st.head.postave)
+										            	Zh=(dBm(*,3)-h_noise)>thres
+
+										            	Sh=0.03*SQRT((1-(ABS(pp(*,2))/Zh))>0.)/(2*!pi*SQRT(2)*1E-6*st.head.pri1)
+										          		Sh(where(Zh EQ thres)>0)=!values.F_nan
+
+										          		Rvh=abs(cc)/SQRT(Zh*Zv)
+														Rvh(where(Zh EQ thres OR Zv EQ thres)>0)=!values.F_nan
+
+										          		Zv(where(Zv EQ thres)>0)=!values.F_nan
+										          		dBZv=10*alog10(Zv)+20*alog10(st.display.r>1e-20)-10*alog10(st.head.rres)+st.head.vdBz;st.head.vdbz-(v_noise-st.head.hnoisedbm)
+
+										          		Zh(where(Zh EQ thres)>0)=!values.F_nan
+										          		dBZh=10*alog10(Zh)+20*alog10(st.display.r>1e-20)-10*alog10(st.head.rres)+st.head.hdBz; st.head.hdbz-(h_noise-st.head.hnoisedbm)
+
+										            ENDIF
+										    END
+										    2: BEGIN ; FFT
+
+
+
+										    END
+										    3: BEGIN ; FFT2
+
+
+
+										    END
+										    4: BEGIN ; FFT2I
+
+
+
+											END
+
+										    ENDCASE
+
+											thet=ped.az ; PPI
+
+											;thet=(ped.az+180.+gps2.head) MOD 360. 	; PPI with GPS correction:
+																				; 180 pedestal zero is towards trear of truck
+																				; GPS.head truck front direction relative to True North.
+
+
+
+											IF st.wi.display_index EQ 1 THEN thet=ped.el+90 ; RHI display
+
+
+												st.display.thet_last=thet
+												h_index=floor(thet/st.display.ant_bw)	; index
+												st.display.thet(h_index)=!pi*thet/180. 	; the actual angle of the data in this index
+
+
+											IF st.wi.display_index EQ 2 THEN 	h_index=i-1 ;Range vs Time display
+
+
+
+											; parameter list: ['dBZh', 'dBZv', 'Zdr', 'VelH', 'VelV', 'PHIvh', , 'STDh', 'STDv']
+											st.display.dispdata(*, h_index, 0)= dBZh
+											st.display.dispdata(*,h_index, 1)= dBZv
+
+											st.display.dispdata(*,h_index, 2)= dBZh-dBZv ; Zdr
+
+											st.display.dispdata(*,h_index, 3)= Velh ; Mean Doppler vel.
+											st.display.dispdata(*,h_index, 4)= Velv ; Mean Doppler vel.
+
+											st.display.dispdata(*,h_index, 5)= Phi ; Differential phase
+											st.display.dispdata(*,h_index, 6)= Rvh ; VH correlation coefficient
+
+
+											st.display.dispdata(*,h_index, 7)= Sh ; STD. Doppler vel.
+											st.display.dispdata(*,h_index, 8)= Sv ; STD. Doppler vel.
+
+
+								ENDIF ; file or netres=66 IF block
+							END ; end while loop
+
+							IF st.wi.ip_list(st.wi.ip_index) EQ 'File' OR st.wi.netres EQ 66 THEN BEGIN ; valid data
+
+									IF st.wi.ip_list(st.wi.ip_index) NE 'File' THEN st=get_stat(st) ; get socket status message
+									st.data.crec=st.data.crec+i-1
+
+									; Write Info. in Status window:
+									t=  'Server: ' + STRING(systime(0, st.stat.host_ts(0)));+'  '+STRING(stat.host_ts(1))+ ' us'
+									WIDGET_CONTROL, st.wi.rstat1ID, SET_VALUE=t
+
+
+										t=	'RF: ' + 	strmid(strtrim(string((st.stat.rcb_temp(0)-282)/6.214),2),0, 5) + $
+											',  PC: '  + strmid(strtrim(string((st.stat.rcb_temp(1)-282)/6.214),2),0, 5) + $
+											',  Out: ' + strmid(strtrim(string((st.stat.rcb_temp(2)-282)/6.214),2),0, 5) + $
+											',  AC: ' +  strmid(strtrim(string((st.stat.rcb_temp(3)-282)/6.214),2),0, 5) + $
+													 ' C'
+										WIDGET_CONTROL, st.wi.rstat2ID, SET_VALUE=t
+
+
+										slope=0.085
+										offset_pitch=-38.42
+										offset_roll=-37.99
+
+										pitch=st.stat.rcb_incl(1)*slope+offset_pitch
+										roll=st.stat.rcb_incl(0)*slope+offset_roll
+
+									t=  'Pitch: ' + STRMID(STRTRIM(STRING(pitch), 2), 0, 3) + $
+									        	',  Roll: ' + STRMID(STRTRIM(STRING(roll), 2), 0, 3) + ' (deg.),'
+									WIDGET_CONTROL, st.wi.rstat3ID, SET_VALUE=t
+
+
+										t='GPS Time: N/A over the socket'
+									IF st.wi.ip_list(st.wi.ip_index) EQ 'File' THEN $
+										t='GPS Time: ' +  systime(0, st.rec_head.gps_ts(0)) + string(st.rec_head.gps_ts(1)) + ' us'
+
+									WIDGET_CONTROL, st.wi.rstat4ID, SET_VALUE=t
+
+									t= 	 'Heading: ' + STRMID(STRTRIM(STRING(st.gps2.head), 2), 0, 5) + ' deg,  Pos.: '+ STRMID(STRTRIM(STRING(st.gps1.lat), 2),0,6) + '  ' + STRING(BYTE(st.gps1.lath)) + ',   ' + $
+												 STRMID(STRTRIM(STRING(st.gps1.lon), 2),0, 6) + ' ' + STRING(BYTE(st.gps1.lonh))
+
+									WIDGET_CONTROL, st.wi.rstat5ID, SET_VALUE=t
+
+									pos_scan=[' ', ' ', ' ', 'Point,', ' ', 'PPI,', 'RHI,', 'Az Ras,', 'El Ras,', 'Vol,'] ; ; scan type 3=Point, 5=PPI, 6=RHI, 7=Az Ras, 8=El Ras, 9=Vol.
+									t=  'Pos: ' + pos_scan(st.stat.scan_type) + ', Az: ' +  $
+									strmid(strtrim(st.ped.az, 2), 0, 3) + ', ' + strmid(strtrim(st.ped.az_vel, 2), 0, 4) + ' deg/s' + $
+									', El: ' + strmid(strtrim(st.ped.el, 2), 0, 3) + ', ' + strmid(strtrim(st.ped.el_vel, 2), 0, 4) + ' deg/s'
+
+
+									WIDGET_CONTROL, st.wi.rstat9ID, SET_VALUE=t
+
+									t=' '
+									IF st.wi.ip_list(st.wi.ip_index) EQ 'File' THEN BEGIN
+										t= 'File Size: ' + strtrim(FIX(st.data.nrec), 2) + ' records, Rec. Count: ' + strtrim(FIX(st.data.crec), 2)
+									ENDIF
+									WIDGET_CONTROL, st.wi.rstat10ID, SET_VALUE=t
+
+								; Write pedestal info in pedestal window
+									wset, st.wi.posdrawwinID
+
+									plot, [-1,1], [-1,1], /nodata, /noerase, ystyle=4, xstyle=4, xmargin=[2,2], ymargin=[2,2] ;Establish scale in the pos window
+
+									az_old=st.display.az_old
+									el_old=st.display.el_old
+
+									azvel_old=st.display.azvel_old
+									elvel_old=st.display.elvel_old
+
+									az=st.ped.az
+									el=st.ped.el
+
+									azvel=st.ped.az_vel
+									elvel=st.ped.el_vel
+
+
+									arrow, 0, 0, 0.95*sin(!pi*az_old/180.), 0.95*cos(!pi*az_old/180.), /DATA, thick=1, color=0
+									arrow, 0, 0, 0.95*sin(!pi*az/180.), 0.95*cos(!pi*az/180.), /DATA, thick=1, color=250
+
+									arrow, 0, 0, 0.95*cos(!pi*el_old/180.)*sin(!pi*az_old/180.), 0.95*cos(!pi*el_old/180.)*cos(!pi*az_old/180.), /DATA, COLOR=0, thick=3
+									arrow, 0, 0, 0.95*cos(!pi*el/180.)*sin(!pi*az/180.), 0.95*cos(!pi*el/180.)*cos(!pi*az/180.), /DATA, COLOR=200, thick=3
+
+
+
+									xyouts, -1.1, -1.2,"Az:"+  strmid(string(0.1*round(az_old*10.       )),2+(az_old LT 0)+(abs(az_old       ) GE 1)+(abs(az_old       ) GE 10)+(abs(az_old    ) GE 100), 6-(az_old LT 0)), ALIGNMENT=0.0, COLOR=0
+									xyouts, 1.1, -1.2, "El:"+  strmid(string(0.1*round(el_old*10.       )),2+(el_old LT 0)+(abs(el_old       ) GE 1)+(abs(el_old       ) GE 10)+(abs(el_old    ) GE 100), 6-(el_old LT 0)), ALIGNMENT=1.0, COLOR=0
+									xyouts, -1.1, 1.2, "Vel:"+ strmid(string(0.1*round(azvel_old*10.    )),2+(azvel_old LT 0)+(abs(azvel_old       ) GE 1)+(abs(azvel_old       ) GE 10), 6-(azvel_old LT 0)), ALIGNMENT=0.0, COLOR=0
+									xyouts, 1.1, 1.2,          strmid(string(0.1*round(elvel_old*10.    )),2+(elvel_old LT 0)+(abs(elvel_old       ) GE 1)+(abs(elvel_old       ) GE 10), 6-(elvel_old LT 0)), ALIGNMENT=1.0, COLOR=0
+
+
+									xyouts, -1.1, -1.2,"Az:"+  strmid(string(0.1*round(az*10.       )),2+(az LT 0)+(abs(az       ) GE 1)+(abs(az       ) GE 10)+(abs(az    ) GE 100), 6-(az LT 0)), ALIGNMENT=0.0, COLOR=255
+									xyouts, 1.1, -1.2, "El:"+  strmid(string(0.1*round(el*10.       )),2+(el LT 0)+(abs(el       ) GE 1)+(abs(el       ) GE 10)+(abs(el    ) GE 100), 6-(el LT 0)), ALIGNMENT=1.0, COLOR=255
+									xyouts, -1.1, 1.2, "Vel:"+ strmid(string(0.1*round(azvel*10.    )),2+(azvel LT 0)+(abs(azvel       ) GE 1)+(abs(azvel       ) GE 10), 6-(azvel LT 0)), ALIGNMENT=0.0, COLOR=255
+									xyouts, 1.1, 1.2,          strmid(string(0.1*round(elvel*10.    )),2+(elvel LT 0)+(abs(elvel       ) GE 1)+(abs(elvel       ) GE 10), 6-(elvel LT 0)), ALIGNMENT=1.0, COLOR=255
+
+
+									st.display.az_old=az
+									st.display.el_old=el
+
+									st.display.azvel_old=azvel
+									st.display.elvel_old=elvel
+
+									wset, st.wi.drawwinID
+
+
+									WIDGET_CONTROL, st.wi.displayID, TIMER=0.0 ; display current data
+
+									IF st.wi.ip_list(st.wi.ip_index) NE 'File' THEN BEGIN ; socket
+
+											st.display.bsize=st.wi.newbsize_val
+
+											st.data.crec=0
+											st.data.nrec=st.display.bsize
+
+
+											IF st.wi.pause_val EQ 0 THEN WIDGET_CONTROL, st.wi.drawID, TIMER=1.  ; read data
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+									ENDIF ; socket if block
+
+									IF st.wi.ip_list(st.wi.ip_index) EQ 'File' THEN BEGIN ; file
+
+										IF st.wi.pause_val EQ 0 THEN WIDGET_CONTROL, st.wi.drawID, TIMER=2 ; read another data block
+										st.display.bsize=st.wi.newbsize_val
+
+
+									ENDIF ; file if block
+
+							ENDIF ; process data
+						ENDIF ; of record count is less than record size
+				ENDIF ; Timer event
+
+			;********************************************************************************************************************************
+	              	
+	  
+
+							

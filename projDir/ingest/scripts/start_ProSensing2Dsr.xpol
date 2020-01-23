@@ -1,0 +1,10 @@
+#! /bin/csh
+
+cd $PROJ_DIR/ingest/params
+
+running "ProSensing2Dsr -params ProSensing2Dsr.xpol"
+if ($status == 1) then
+  ProSensing2Dsr -params ProSensing2Dsr.xpol |& \
+    LogFilter -d $ERRORS_LOG_DIR -p ProSensing2Dsr -i xpol &
+endif
+

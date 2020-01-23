@@ -1,0 +1,38 @@
+# Server running
+
+idle=0;    # Comments may be placed 'inline', i.e., alongside non-comment code.
+running=1; # It is important that there are no spaces on either side of the '='
+
+# set DRX configuration - pulse-pair
+
+#SetConfig
+#        server_state=running
+#        server_mode=0 # pulse pair
+#        recording=false
+#        pri_1_usec=1200
+#        pri_2_usec=1200
+#        group_interval_usec=2400
+#        n_gates=800
+#        clutter_n_ave=15
+#        clutter_filter_width_m_sec=1.0
+#        post_n_ave=1
+#        freq_track_mode=0 # manual
+#        lo_freq_mhz=17.00
+#        filter_bw_mhz=2.0
+#        pulse_len_m=75
+#        range_gate_spacing_m=75
+#        sum_powers=0;
+        
+# A new variable is created automatically when assigned its first value, and
+# exists in the contexts in and below which the assignment occurs; this is
+# illustrated in an example following the 'Function' example.
+
+# Pedestal velocity is in deg/sec
+defVel=15;
+
+# Execute a built-in command, such as the pedestal 'Point', as follows:
+Point az=175 el=90 azVel=20 elVel=20;
+
+#AzRaster az=200 el=45 azVel=20 elVel=5
+#         azSpan=200 elSpan=6 elInc=0.5;
+

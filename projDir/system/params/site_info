@@ -1,0 +1,27 @@
+#############################################
+# site-specific parameter file for XPOL
+#
+# Mike Dixon May 2012
+#############################################
+
+# site details
+
+# FOOTHILLS lab
+
+setenv PROJECT_NAME               "XPOL"
+setenv SITE_NAME                  "FoothillsLab"
+setenv RADAR_LAT                  40.0386
+setenv RADAR_LON                  -105.241
+setenv RADAR_ALT_KM               1.6152
+setenv RADAR_ALT_M                1615.2
+
+# Marshall
+
+#setenv PROJECT_NAME               "marshall"
+#setenv SITE_NAME                  "MARSHALL"
+#setenv RADAR_LAT                  39.9502
+#setenv RADAR_LON                  -105.1951
+#setenv RADAR_ALT_KM               1.748
+#setenv RADAR_ALT_M                1748
+
+#############################################

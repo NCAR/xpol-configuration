@@ -1,0 +1,16 @@
+Running a sun calibration
+=========================
+
+Start the system up normally.
+
+On xpol, edit ~/projDir/control/proc_list as follows:
+
+- comment out the start_XpolScanControl.ops line
+- uncomment the start_XpolScanControl.sun line
+
+Save these edits, then do:
+
+snuff XpolScanControl.ops
+start_XpolScanControl.sun
+
+On xpol, start HawkEye with 'start_HawkEye.xpol'.

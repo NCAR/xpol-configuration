@@ -1,0 +1,68 @@
+Stopping the radar
+==================
+
+On 'drx', run:
+
+  start_xpol_control
+
+This will bring up the control GUI.
+
+Go through the following steps:
+
+(a) Connect to the xpold server
+-------------------------------
+
+Click 'Connect' - this connects xpol_control to xpold.
+
+(b) Make sure the server is in run mode.
+----------------------------------------
+
+Set 'Server state' to 'Run'
+Click 'Apply'
+
+After hitting Apply, you will see a message saying that the
+server configuration is updating. You need to wait until
+this message goes away.
+
+(c) Point the antenna vertically
+--------------------------------
+
+Make sure the antenna is pointed vertically up, so there is
+no radiation hazard. This is done in the 'Pedestal' section.
+
+Set:
+
+  Action: Point
+  Az position: 0
+  El position: 90
+  Az velocity: 10
+  El velocity: 10
+
+  Click 'Apply' in the upper-right hand window.
+
+Make sure the elevation is close to 90 degrees - i.e. the 
+antenna is pointing vertically.
+
+  Click 'Stop' to set the brakes.
+
+(d) Turn off the transmitter
+----------------------------
+
+  Set 'Frequency tracking' to 'Manual'.
+  Click on 'RF power' to remove the check mark.
+  Click 'Apply'
+
+  Monitor the 'Power:' value. This starts around -12 dBm.
+  The power should decrease to around -85 dBm or nan.
+
+(d) Turn off dry air power
+--------------------------
+
+  Click on 'Dry air power' to remove the check mark.
+  Click 'Apply'.
+
+(e) Stop processes on xpol
+
+--------------------------
+
+On xpol, do 'stop_all'.

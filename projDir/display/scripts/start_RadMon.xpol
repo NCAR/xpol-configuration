@@ -1,0 +1,8 @@
+#! /bin/csh -f
+
+xterm -title RadMon.xpol -bg black -fg yellow -g 80x20-0+0 -fn fixed -sb -sl 5000 -e ssh $DATA_HOST RadMon -fmq /home/radarop/projDir/data/fmq/moments/xpol -tilt_flags_summary -summary -update -1 &
+
+
+
+
+

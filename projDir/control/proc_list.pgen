@@ -1,0 +1,38 @@
+##############################################################################
+# SYSTEM processes
+#
+DsServerMgr   primary    start_DsServerMgr         snuff_inst        localhost
+#Janitor      logs       start_Janitor.logs        snuff_inst        localhost
+#Janitor      data       start_Janitor.data        snuff_inst        localhost
+Scout         primary    start_Scout               kill_Scout        localhost
+DataMapper    primary    start_DataMapper          kill_DataMapper   localhost
+DsFileDist    ops        start_DsFileDist.ops      kill_DataMapper   localhost
+#
+###############################################################################
+# Ingest processes
+#
+ProSensing2Dsr   xpol      start_ProSensing2Dsr.xpol     snuff_inst localhost
+Dsr2Radx  moments.xband    start_Dsr2Radx.moments.xband  snuff_inst localhost
+Dsr2Vol   moments.xband    start_Dsr2Vol.moments.xband   snuff_inst localhost
+XpolScanControl  ops       start_XpolScanControl.ops     snuff_inst localhost
+#
+###############################################################################
+# SunCal
+#
+SunCal      xpol      start_SunCal.xpol     snuff_inst localhost
+#XpolScanControl  sun       start_XpolScanControl.sun     snuff_inst localhost
+#XpolScanControl  sun_rhi   start_XpolScanControl.sun_rhi snuff_inst localhost
+###############################################################################
+# PID, Rain-rate, moisture
+#
+#Dsr2Vol    partrain.xband   start_Dsr2Vol.partrain.xband   snuff_inst localhost
+#Dsr2Radx   partrain.xband   start_Dsr2Radx.partrain.xband  snuff_inst localhost
+#Dsr2Vol    cart.partrain    start_Dsr2Vol.cart.partrain    snuff_inst localhost
+###############################################################################
+# TITAN
+#
+#Titan      xband             start_Titan.xband            snuff_inst localhost
+###############################################################################
+# Watch RHI files, write metadata to SPDB
+#
+Rhi2Spdb  xband            start_Rhi2Spdb.xband          snuff_inst localhost

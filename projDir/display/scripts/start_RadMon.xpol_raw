@@ -1,0 +1,8 @@
+#! /bin/csh -f
+
+xterm -title RadMon.xpol_raw -bg black -fg orange -g 80x20-0+290 -fn fixed -sb -sl 5000 -e ssh $DATA_HOST RadMon -fmq /home/radarop/projDir/data/fmq/moments/xpol_raw -summary -update -1 &
+
+
+
+
+

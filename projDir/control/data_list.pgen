@@ -1,0 +1,19 @@
+######################################################
+# required data for pgen
+#
+# Format is:
+#
+#  dir  late_secs  very_late_secs
+######################################################
+
+fmq/moments/xband/shmem_20000   60      120
+fmq/partrain/xband/shmem_25000  60      120
+
+mdv/cart/moments/xband          1000     1200
+mdv/cart/moments/kband          1000     1200
+mdv/cart/partrain/xband         1000     1200
+
+cfradial/moments/xband          1000     1200
+cfradial/partrain/xband         1000     1200
+
+spdb/rhi/xband                  1000    1200

@@ -1,0 +1,10 @@
+#! /bin/csh
+
+cd $PROJ_DIR/ingest/params
+
+running "XpolScanControl -params XpolScanControl.sun_rhi"
+if ($status == 1) then
+  XpolScanControl -params XpolScanControl.sun_rhi |& \
+    LogFilter -d $ERRORS_LOG_DIR -p XpolScanControl -i sun_rhi &
+endif
+

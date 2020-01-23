@@ -1,0 +1,34 @@
+xpol server
+-----------
+
+Currently the xpol server has following external IP address:
+
+  128.117.47.241
+
+login is radarop
+
+To forward CVS, set the following alias:
+
+  alias xpol 'ssh -a -X -Y -C -R 2401:cvs:2401 radarop@128.117.47.241'
+
+xpol also has the following IP address on the local network:
+
+  192.168.85.1
+
+drx server
+----------
+
+The drx server has the IP address:
+
+  192.168.85.78
+
+This is reachable only from the xpol server.
+
+The radarop account has the following alias for loggin in to drx from xpol:
+
+  alias drx 'ssh -a -XY -C -R 2401:localhost:2401 radarop@192.168.85.78'
+
+and the following alias for logging in to xpol from drx:
+
+  alias xpol 'ssh -a -XY -C radarop@192.168.85.1'
+  

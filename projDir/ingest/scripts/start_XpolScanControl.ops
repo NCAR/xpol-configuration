@@ -1,0 +1,10 @@
+#! /bin/csh
+
+cd $PROJ_DIR/ingest/params
+
+running "XpolScanControl -params XpolScanControl.ops"
+if ($status == 1) then
+  XpolScanControl -params XpolScanControl.ops |& \
+    LogFilter -d $ERRORS_LOG_DIR -p XpolScanControl -i ops &
+endif
+

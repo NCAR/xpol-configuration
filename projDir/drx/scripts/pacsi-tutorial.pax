@@ -1,0 +1,285 @@
+############################
+# Quick tutorial for PACSI, the ProSensing Arbitrary Command Sequence Interpreter
+# (c) 2011 ProSensing, Inc
+# Last updated Dec 6, 2011
+############################
+
+############################
+# A list of pedestal-related Pacsi commands is included at the bottom of
+# this file.
+############################
+
+# Comments are preceded by '#' characters and may appear anywhere in a Pacsi file.
+
+# All Pacsi statements must end with a semicolon.  The reason for and 
+# usefulness of this is described in the whitespace discussion below.
+
+# Variables are defined and assigned (or reassigned) a value as follows:
+idle=0;    # Comments may be placed 'inline', i.e., alongside non-comment code.
+running=1; # It is important that there are no spaces on either side of the '='
+
+# A new variable is created automatically when assigned its first value, and
+# exists in the contexts in and below which the assignment occurs; this is
+# illustrated in an example following the 'Function' example.
+
+# Pedestal velocity is in deg/sec
+default_ped_velocity=12;
+
+# Execute a built-in command, such as the pedestal 'Point', as follows:
+Point az=80 el=99 azVel=20 elVel=20;
+
+# Some commands have default values for certain parameters, i.e., they do not
+# require all parameters to be given when invoking the command.
+# For example, 'Point' defaults the 'azVel' and 'elVel' parameters to their
+# respective maximum values.  For the XPol project, this maximum is defined to
+# be 20 deg/sec, so the above 'Point' command could have also been simply 
+# written as:
+
+Point az=80 el=99;
+
+# The Pacsi interpreter ignores the case of both commands and parameters.
+# Thus, our 'Point' command could have been written:
+
+POINT AZ=80 EL=99;
+
+# ... which is also equivalent to:
+
+point Az=80 El=99;
+
+# All excess whitespace, including newlines, is ignored by Pacsi.  This makes
+# it possible for lengthy statements to be broken into multiple lines.  The
+# length of this 'AzRaster' command makes it a little hard to read:
+
+AzRaster az=200 el=190 azVel=default_ped_velocity elVel=default_ped_velocity azSpan=40 elSpan=35 elInc=2;
+
+# Here's an easier-to-read version of the same AzRaster command; an important
+# thing to note is the function of the semicolon - regardless of how much 
+# whitespace we insert, the Pacsi statement doesn't end until the semicolon
+# is reached:
+
+AzRaster az=200 el=190 azVel=default_ped_velocity elVel=default_ped_velocity
+         azSpan=40 elSpan=35 elInc=2;
+
+# One may define any number of custom commands, or "functions", of any length
+# within a Pacsi program.  Functions may take any number of parameters, each 
+# with or without a default value; see 'Point' example above for more about
+# default values.
+# Here we define a new function named 'PointWait' that takes six parameters, 
+# four of which are 'optional', i.e., they have default values.
+# Note that the function definition spans two lines for sake of readability:
+
+Function name=PointWait waitTime=10  # Function definition continues on next line
+         az el azVel=default_ped_velocity elVel=default_ped_velocity;
+
+  # The parameter "az=az" looks odd, but is actually perfectly legal, as the
+  # name on the left of the equal sign identifies the parameter to the 'Point'
+  # command, and the name on the right identifies the 'az' parameter that was
+  # passed to the 'PointWait' function.
+  
+  Point az=az el=el azVel=azVel elVel=elVel;
+  Pause time=waitTime;
+  
+  # The *scope* of a Pacsi variable is always relative to the current function
+  # context; if not within a function, then the context is the outermost layer,
+  # called the "global" or "main" context.
+  # For example, the following statement create a new Pacsi variable
+  # named "an_important_value" that exists only within the context of this
+  # function:
+  
+  an_important_value=42;
+  
+  # It's important to note that assigning a value to a variable having the same
+  # name as one already created in a higher context will create a new variable
+  # in the current context, rather than change the value of the
+  # already-existing one.  For example, the following statement will create a
+  # NEW variable called "default_ped_velocity" with an initial value of 37; it
+  # will NOT change the value of the existing "default_ped_velocity" variable
+  # created above:
+  
+  default_ped_velocity=37;
+
+# All function definitions must end with "EndFunction;"
+EndFunction;
+
+# Another function example.  This one takes a single required parameter named
+# 'extraWaitTime'; remember that we know it's required, not optional, because
+# we didn't specify a default value, e.g., if the 'extraWaitTime' parameter
+# were specified as "extraWaitTime=6", then the parameter would be optional,
+# its value defaulting to '6' if the omitted in a call to 'MultiPoint'.
+
+Function name=MultiPoint extraWaitTime;
+
+  PointWait az=0   el=45;
+  PointWait az=45  el=45 waitTime=15;
+  PointWait az=90  el=45;
+  PointWait az=135 el=45 azVel=6;
+  Pause time=extraWaitTime;
+
+EndFunction;
+
+# Now we define a function to be looped repeatedly.  Often, the purpose of a 
+# Pacsi program is to repeat some sequence of commands (in)finitely many times,
+# and to accomplish this one must define a function containing said commands, 
+# as follows (the name of this function does not need to be "LoopedFunction");
+# "elRasterVel" is defined here to be a required parameter when the function is
+# called, that is, omitting the "elRasterVel" parameter when invoking this
+# custom function later would result in an error.
+
+Function name=LoopedFunction elRasterVel;
+
+  # The 'SetConfig' command changes the radar-system-specific configuration,
+  # that is, the parameters associated with this command are different for
+  # every radar system.
+  # For XPol, unless the server_state=idle (0) or recording=false, a new data
+  # file is started before the command sequence continues.
+  
+  SetConfig server_state=running recording=true post_n_ave=12 fft_len=16 n_gates=400;
+  
+  # Calling our custom 'MultiPoint' function, defined above.
+  MultiPoint extraWaitTime=10;
+  ElRaster azInc=2.0 azVel=6.0 elVel=elRasterVel azSpan=10.0 elSpan=50.0;
+
+EndFunction;
+
+# The 'Loop' command executes the given command (or user-defined function) with
+# the given parameters a number of times specified by the 'count' parameter.
+# Here we specify "count=infinity", and so the "LoopedFunction" function will be
+# repeated until manually stopped by the user (or by some other external event).
+# If, for example, 'count' were set to '7' instead, then 
+# "LoopedFunction elRasterVel=1.7" would be executed seven times.
+# NOTE: In previous revisions of Pacsi, "Loop" was called "Repeat".
+
+Loop count=infinity name=LoopedFunction elRasterVel=1.7;
+
+########## ####### ###### ## ###################### ###### ## ###########
+
+The following is a list of Pacsi commands relevant to pedestal operation;
+note that all 'az' and 'el' are in units of degrees, 'azVel' and 'elVel' are
+in deg/sec, and time parameters are in seconds.
+
+Name: Point
+Description: Move to given point at given velocity via shortest path
+Required params: (none - if either az or el is omitted, no movement happens along that axis)
+Optional params: az, el, azVel, elVel
+Example: 
+    To move the pedestal to the az, el position of {90, 100} at a speed of 
+    10 degrees/sec along azimuth, and the default pointing speed along 
+    elevation (which is usually the pedestal's max speed):
+    Point az=90 el=100 azVel=10;
+
+Name: PointDist
+Description: Move given distance (offset from current position) at given velocity.
+** NOTE: If at least one prior pointing command was executed successfully, then
+         PointDist is relative to the most recent destination point.
+         For example, if the most recent successful command is "Point az=10;",
+         and the current az position is, say, 9.95 deg, then the command 
+         "PointDist az=+7;" will move to 17.00, not 16.95.
+Required params: (none - if either az or el is omitted, no movement happens
+    along that axis)
+Optional params: az, el, azVel, elVel
+Example: 
+    To move the pedestal an azimuth distance of +90 and en elevation distance
+    of -100 at rates of 5 and 8 deg/sec respectively, relative to its current
+    position:
+    PointDist az=90 el=-100 azVel=5 elVel=8;
+
+Name: PointAbs
+Description: Move to given point at given velocity via absolute path; the 
+    numeric sign of each parameter selects the path taken.
+    Use of this command is discouraged in favor of some combination of Point
+    and PointDist, as predicting the exact behavior of PointAbs is generally
+    unintuitive and difficult.
+Required params: az, el
+Optional params: azVel, elVel
+
+Name: Home
+Description: Seek to 'home' position at given velocity.
+Required params: (none)
+Optional params: azVel, elVel
+Example:
+    To move the pedestal to the 'home' position at az, el speeds of 5 and 8
+    deg/sec respectively:
+    Home azVel=5 elVel=8;
+
+Name: Pause
+Description: Pause execution for given length of time.
+Required params: time
+** NOTE: In later revisions of the Pacsi spec, the "time" parameter was 
+         renamed "duration"
+Optional params: (none)
+Example:
+    To pause execution of the Pacsi script for 10 seconds:
+    Pause time=10;
+
+Name: Slew
+Description: Slew pedestal (continuous azimuth rotation at current elevation).
+** NOTE: It is possible to adjust the elevation angle whilst slewing; see 
+         "Examples" section.
+Required params: azVel
+Optional params: (none)
+Examples:
+  To execute a slew at the current elevation at an azimuth speed of 8 deg/sec:
+    Slew azVel=8;
+  To adjust elevation +7 degrees @ 3 deg/sec after slewing @ 8 deg/sec for 10 seconds:
+    Slew azVel=8;
+    Pause duration=10;
+    PointDist el=+7 elVel=3;
+
+Name: PPI
+Description: Execute PPI scan from given position (or current position if 
+    omitted) at given speed.
+Required params: azVel
+Optional params: az, el
+Example:
+    To execute a PPI scan beginning from the current position, and
+    spinning around in azimuth at a rate of 12 deg/sec:
+    PPI azVel=12;
+
+Name: RHI
+Description: Execute RHI scan from given position (or current position if 
+    omitted) at given speed, covering given range.
+Required params: elVel, elInc
+Optional params: az, el
+Example:
+    To execute a RHI scan covering the el range {min=20, max=80} at the current
+    azimuth position, scanning at a speed of 4 deg/sec:
+    RHI el=20 elInc=60 elVel=4;
+    NOTE: max el of 80 = 20 (starting) + 60 (increment)
+
+Name: AzRaster
+Description: Execute azimuth raster scan from given position (or current position
+    if omitted) at given speed, covering given region with given elevation increment.
+Required params: azVel, elVel, azSpan, elSpan, elInc
+Optional params: az, el
+Example:
+    To execute an azimuth raster scan covering the az, el region
+    {azMin=20, azMax=60, elMin=10, elMax=30} in elevation increments of 2 degrees,
+    at az, el speeds of 5 and 1, respectively:
+    AzRaster az=20 el=10 azSpan=40 elSpan=20 elInc=2 azVel=5 elVel=1;
+    NOTE: max ax, el of {60, 30} = {20, 10} (starting) + {40, 20} (span)
+
+Name: ElRaster
+Description: Execute elevation raster scan from given position (or current position
+    if omitted) at given speed, covering given region with given azimuth increment.
+Required params: azVel, elVel, azSpan, elSpan, azInc
+Optional params: az, el
+Example:
+    To execute an elevation raster scan covering the az, el region
+    {azMin=20, azMax=60, elMin=10, elMax=30} in azimuth increments of 2 degrees,
+    at az, el speeds of 5 and 1, respectively:
+    ElRaster az=20 el=10 azSpan=40 elSpan=20 azInc=2 azVel=5 elVel=1;
+    NOTE: max ax, el of {60, 30} = {20, 10} (starting) + {40, 20} (span)
+
+Name: Volume
+Description: Execute volume scan from given position (or current position
+    if omitted) at given speed, covering given region with given elevation increment.
+Required params: azVel, elVel, elSpan, elInc
+Optional params: el
+Example:
+    To execute a volume scan covering the elevation range {elMin=10, elMax=90}
+    in increments of 5 degrees, at az (continual spinning), el (stepping)
+    speeds of 15 and 3, respectively:
+    Volume el=10 elSpan=80 elInc=5 azVel=15 elVel=3;
+    NOTE: max el of 90 = 10 (starting) + 80 (span)
+
+

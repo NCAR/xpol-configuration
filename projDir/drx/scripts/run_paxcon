@@ -1,0 +1,10 @@
+#! /bin/csh
+
+#cd /usr/local/xpol/save-20120806-2128
+#setenv LD_LIBRARY_PATH .
+
+paxcon -s drx -p 3000 -P < $1
+
+
+
+

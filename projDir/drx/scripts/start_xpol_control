@@ -1,0 +1,10 @@
+#! /bin/csh
+
+cd $PROJ_DIR/data/logs
+
+running "xpol_control"
+if ($status == 1) then
+  xpol_control |& \
+	LogFilter -d $ERRORS_LOG_DIR -p xpol_control >& /dev/null &
+endif
+

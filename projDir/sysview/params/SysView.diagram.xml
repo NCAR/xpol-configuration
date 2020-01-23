@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DIAGRAM className="edu.ucar.rap.sysview.appcore.DiagramConfig" label="XPOL" xloc="133" yloc="37" windowX="523" windowY="20" windowWidth="972" windowHeight="854" status="STATUS_OKAY" priority="PRIORITY_HIGH" infoLink="" description="">
+  <DIAGRAM className="edu.ucar.rap.sysview.appcore.DiagramConfig" label="xpol" xloc="325" yloc="165" windowX="617" windowY="229" windowWidth="948" windowHeight="818" status="STATUS_OKAY" priority="PRIORITY_HIGH" infoLink="" description="">
+    <DIAGRAM className="edu.ucar.rap.sysview.appcore.DiagramConfig" label="MDV file processing" xloc="759" yloc="248" windowX="0" windowY="0" windowWidth="932" windowHeight="581" status="STATUS_OKAY" priority="PRIORITY_HIGH" infoLink="" description="">
+      <THING className="edu.ucar.rap.sysview.appcore.DatasetConfig" onTop="false" dataType="fmq" dataDir="fmq/moments/xpol" host="xpol_raw" lateReference="26 Last Registration Time" lateDataSecs="300" veryLateDataSecs="600" xloc="320" yloc="48" status="STATUS_DISABLED" priority="PRIORITY_HIGH" infoLink="" description="" />
+      <THING className="edu.ucar.rap.sysview.appcore.ProcessConfig" onTop="false" processInstance="moments.xband" processName="Dsr2Vol" host="xpol" xloc="317" yloc="141" status="STATUS_OKAY" priority="PRIORITY_HIGH" infoLink="" description="" />
+      <THING className="edu.ucar.rap.sysview.appcore.DatasetConfig" onTop="false" dataType="mdv" dataDir="mdv/moments/xband/polar/sur" host="xpol" lateReference="26 Last Registration Time" lateDataSecs="1200" veryLateDataSecs="1800" xloc="125" yloc="252" status="STATUS_OKAY" priority="PRIORITY_HIGH" infoLink="" description="" />
+      <THING className="edu.ucar.rap.sysview.appcore.DatasetConfig" onTop="false" dataType="mdv" dataDir="mdv/moments/xband/polar/vert" host="xpol" lateReference="26 Last Registration Time" lateDataSecs="1200" veryLateDataSecs="1800" xloc="324" yloc="247" status="STATUS_OKAY" priority="PRIORITY_HIGH" infoLink="" description="" />
+      <THING className="edu.ucar.rap.sysview.appcore.DatasetConfig" onTop="false" dataType="mdv" dataDir="mdv/moments/xband/polar/rhi" host="xpol" lateReference="26 Last Registration Time" lateDataSecs="1200" veryLateDataSecs="1800" xloc="524" yloc="249" status="STATUS_OKAY" priority="PRIORITY_HIGH" infoLink="" description="" />
+      <THING className="edu.ucar.rap.sysview.appcore.ProcessConfig" onTop="false" processInstance="xband" processName="Rhi2Spdb" host="xpol" xloc="670" yloc="249" status="STATUS_OKAY" priority="PRIORITY_HIGH" infoLink="" description="" />
+      <THING className="edu.ucar.rap.sysview.appcore.DatasetConfig" onTop="false" dataType="spdb" dataDir="spdb/rhi/xband" host="xpol" lateReference="26 Last Registration Time" lateDataSecs="1200" veryLateDataSecs="1800" xloc="799" yloc="251" status="STATUS_OKAY" priority="PRIORITY_HIGH" infoLink="" description="" />
+      <THING className="edu.ucar.rap.sysview.appcore.TextBoxConfig" onTop="false" xloc="462" yloc="376" width="850" height="100" color="0x60b0b0" font="Dialog-plain-12 " text=" " description="&quot;&quot;''''" />
+      <THING className="edu.ucar.rap.sysview.appcore.DatasetConfig" onTop="false" dataType="mdv" dataDir="xpol/projDir/data/mdv/moments/xband/polar/sur" host="vapor" lateReference="26 Last Registration Time" lateDataSecs="1200" veryLateDataSecs="1800" xloc="128" yloc="377" status="STATUS_OKAY" priority="PRIORITY_HIGH" infoLink="" description="" />
+      <THING className="edu.ucar.rap.sysview.appcore.DatasetConfig" onTop="false" dataType="mdv" dataDir="xpol/projDir/data/mdv/moments/xband/polar/vert" host="vapor" lateReference="26 Last Registration Time" lateDataSecs="1200" veryLateDataSecs="1800" xloc="323" yloc="376" status="STATUS_OKAY" priority="PRIORITY_HIGH" infoLink="" description="" />
+      <THING className="edu.ucar.rap.sysview.appcore.DatasetConfig" onTop="false" dataType="mdv" dataDir="xpol/projDir/data/mdv/moments/xband/polar/rhi" host="vapor" lateReference="26 Last Registration Time" lateDataSecs="1200" veryLateDataSecs="1800" xloc="524" yloc="375" status="STATUS_OKAY" priority="PRIORITY_HIGH" infoLink="" description="" />
+      <THING className="edu.ucar.rap.sysview.appcore.DatasetConfig" onTop="false" dataType="spdb" dataDir="xpol/data/spdb/rhi/xband" host="vapor" lateReference="26 Last Registration Time" lateDataSecs="1200" veryLateDataSecs="1800" xloc="802" yloc="371" status="STATUS_OKAY" priority="PRIORITY_HIGH" infoLink="" description="" />
+      <THING className="edu.ucar.rap.sysview.appcore.AnnotationConfig" onTop="false" xloc="422" yloc="309" color="0x000000" font="Dialog-plain-12" annotation="DsFileDist" description="" />
+      <THING className="edu.ucar.rap.sysview.appcore.AnnotationConfig" onTop="false" xloc="420" yloc="335" color="0x000000" font="Dialog-plain-12" annotation="vapor" description="" />
+      <THING className="edu.ucar.rap.sysview.appcore.FlowLineConfig" onTop="true" arrow="1" description="">
+        <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="320" yloc="75" />
+        <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="320" yloc="116" />
+      </THING>
+      <THING className="edu.ucar.rap.sysview.appcore.FlowLineConfig" onTop="true" arrow="1" description="">
+        <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="322" yloc="167" />
+        <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="322" yloc="221" />
+      </THING>
+      <THING className="edu.ucar.rap.sysview.appcore.FlowLineConfig" onTop="true" arrow="1" description="">
+        <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="321" yloc="166" />
+        <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="128" yloc="226" />
+      </THING>
+      <THING className="edu.ucar.rap.sysview.appcore.FlowLineConfig" onTop="true" arrow="1" description="">
+        <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="321" yloc="163" />
+        <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="525" yloc="222" />
+      </THING>
+      <THING className="edu.ucar.rap.sysview.appcore.FlowLineConfig" onTop="true" arrow="1" description="">
+        <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="582" yloc="251" />
+        <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="619" yloc="251" />
+      </THING>
+      <THING className="edu.ucar.rap.sysview.appcore.FlowLineConfig" onTop="true" arrow="1" description="">
+        <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="721" yloc="251" />
+        <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="748" yloc="251" />
+      </THING>
+      <THING className="edu.ucar.rap.sysview.appcore.FlowLineConfig" onTop="true" arrow="1" description="">
+        <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="123" yloc="277" />
+        <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="123" yloc="350" />
+      </THING>
+      <THING className="edu.ucar.rap.sysview.appcore.FlowLineConfig" onTop="true" arrow="1" description="">
+        <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="321" yloc="272" />
+        <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="321" yloc="350" />
+      </THING>
+      <THING className="edu.ucar.rap.sysview.appcore.FlowLineConfig" onTop="true" arrow="1" description="">
+        <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="522" yloc="274" />
+        <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="522" yloc="347" />
+      </THING>
+      <THING className="edu.ucar.rap.sysview.appcore.FlowLineConfig" onTop="true" arrow="1" description="">
+        <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="798" yloc="276" />
+        <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="798" yloc="345" />
+      </THING>
+    </DIAGRAM>
+    <THING className="edu.ucar.rap.sysview.appcore.ProcessConfig" onTop="true" processInstance="primary" processName="DsServerMgr" host="xpol" xloc="149" yloc="651" status="STATUS_OKAY" priority="PRIORITY_HIGH" infoLink="" description="" />
+    <THING className="edu.ucar.rap.sysview.appcore.ProcessConfig" onTop="true" processInstance="primary" processName="Scout" host="xpol" xloc="275" yloc="650" status="STATUS_OKAY" priority="PRIORITY_HIGH" infoLink="" description="" />
+    <THING className="edu.ucar.rap.sysview.appcore.ProcessConfig" onTop="true" processInstance="primary" processName="DataMapper" host="xpol" xloc="400" yloc="650" status="STATUS_OKAY" priority="PRIORITY_HIGH" infoLink="" description="" />
+    <THING className="edu.ucar.rap.sysview.appcore.ProcessConfig" onTop="true" processInstance="ops" processName="DsFileDist" host="xpol" xloc="522" yloc="651" status="STATUS_OKAY" priority="PRIORITY_HIGH" infoLink="" description="" />
+    <THING className="edu.ucar.rap.sysview.appcore.ProcessConfig" onTop="true" processInstance="xpol" processName="ProSensing2Dsr" host="xpol" xloc="272" yloc="175" status="STATUS_OKAY" priority="PRIORITY_HIGH" infoLink="" description="" />
+    <THING className="edu.ucar.rap.sysview.appcore.ProcessConfig" onTop="true" processInstance="moments.xband" processName="Dsr2Radx" host="xpol" xloc="574" yloc="324" status="STATUS_OKAY" priority="PRIORITY_HIGH" infoLink="" description="" />
+    <THING className="edu.ucar.rap.sysview.appcore.ProcessConfig" onTop="true" processInstance="ops" processName="XpolScanControl" host="xpol" xloc="581" yloc="174" status="STATUS_OKAY" priority="PRIORITY_HIGH" infoLink="" description="" />
+    <THING className="edu.ucar.rap.sysview.appcore.ProcessConfig" onTop="true" processInstance="xpol" processName="SunCal" host="xpol" xloc="106" yloc="369" status="STATUS_OKAY" priority="PRIORITY_HIGH" infoLink="" description="" />
+    <THING className="edu.ucar.rap.sysview.appcore.DatasetConfig" onTop="true" dataType="fmq" dataDir="fmq/moments/xpol_raw" host="xpol" lateReference="26 Last Registration Time" lateDataSecs="300" veryLateDataSecs="600" xloc="426" yloc="174" status="STATUS_DISABLED" priority="PRIORITY_HIGH" infoLink="" description="" />
+    <THING className="edu.ucar.rap.sysview.appcore.DatasetConfig" onTop="true" dataType="fmq" dataDir="fmq/moments/xpol" host="xpol_raw" lateReference="26 Last Registration Time" lateDataSecs="300" veryLateDataSecs="600" xloc="579" yloc="251" status="STATUS_DISABLED" priority="PRIORITY_HIGH" infoLink="" description="" />
+    <THING className="edu.ucar.rap.sysview.appcore.TextBoxConfig" onTop="false" xloc="78" yloc="175" width="94" height="50" color="0x60b0b0" font="Dialog-plain-12 " text="xpold^NL^drx" description="''" />
+    <THING className="edu.ucar.rap.sysview.appcore.AnnotationConfig" onTop="false" xloc="170" yloc="164" color="0x000000" font="Dialog-plain-12" annotation="port 3000" description="" />
+    <THING className="edu.ucar.rap.sysview.appcore.ProcessConfig" onTop="true" processInstance=" " processName="run_paxcon" host="xpol" xloc="510" yloc="74" status="STATUS_DISABLED" priority="PRIORITY_HIGH" infoLink="" description="" />
+    <THING className="edu.ucar.rap.sysview.appcore.AnnotationConfig" onTop="false" xloc="508" yloc="37" color="0x000000" font="Dialog-plain-12" annotation="run once and exit" description="" />
+    <THING className="edu.ucar.rap.sysview.appcore.DatasetConfig" onTop="true" dataType="txt" dataDir="/tmp/paxi.txt" host="xpol" lateReference="26 Last Registration Time" lateDataSecs="1800" veryLateDataSecs="3600" xloc="651" yloc="75" status="STATUS_DISABLED" priority="PRIORITY_HIGH" infoLink="" description="" />
+    <THING className="edu.ucar.rap.sysview.appcore.FlowLineConfig" onTop="true" arrow="1" description="">
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="585" yloc="148" />
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="648" yloc="101" />
+    </THING>
+    <THING className="edu.ucar.rap.sysview.appcore.FlowLineConfig" onTop="true" arrow="1" description="">
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="599" yloc="75" />
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="561" yloc="75" />
+    </THING>
+    <THING className="edu.ucar.rap.sysview.appcore.FlowLineConfig" onTop="true" arrow="1" description="">
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="578" yloc="148" />
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="512" yloc="99" />
+    </THING>
+    <THING className="edu.ucar.rap.sysview.appcore.FlowLineConfig" onTop="true" arrow="1" description="">
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="459" yloc="75" />
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="75" yloc="75" />
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="75" yloc="148" />
+    </THING>
+    <THING className="edu.ucar.rap.sysview.appcore.FlowLineConfig" onTop="true" arrow="1" description="">
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="125" yloc="175" />
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="217" yloc="175" />
+    </THING>
+    <THING className="edu.ucar.rap.sysview.appcore.FlowLineConfig" onTop="true" arrow="1" description="">
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="327" yloc="176" />
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="376" yloc="176" />
+    </THING>
+    <THING className="edu.ucar.rap.sysview.appcore.FlowLineConfig" onTop="true" arrow="1" description="">
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="477" yloc="175" />
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="524" yloc="175" />
+    </THING>
+    <THING className="edu.ucar.rap.sysview.appcore.DatasetConfig" onTop="true" dataType="nc" dataDir="xpol/projDir/data/cfradial/moments/xband/sur" host="vapor" lateReference="26 Last Registration Time" lateDataSecs="1200" veryLateDataSecs="1800" xloc="375" yloc="541" status="STATUS_OKAY" priority="PRIORITY_HIGH" infoLink="" description="" />
+    <THING className="edu.ucar.rap.sysview.appcore.DatasetConfig" onTop="true" dataType="nc" dataDir="xpol/projDir/data/cfradial/moments/xband/rhi" host="vapor" lateReference="26 Last Registration Time" lateDataSecs="1200" veryLateDataSecs="1800" xloc="773" yloc="544" status="STATUS_OKAY" priority="PRIORITY_HIGH" infoLink="" description="" />
+    <THING className="edu.ucar.rap.sysview.appcore.DatasetConfig" onTop="true" dataType="nc" dataDir="xpol/projDir/data/cfradial/moments/xband/vert" host="vapor" lateReference="26 Last Registration Time" lateDataSecs="1200" veryLateDataSecs="1800" xloc="575" yloc="545" status="STATUS_OKAY" priority="PRIORITY_HIGH" infoLink="" description="" />
+    <THING className="edu.ucar.rap.sysview.appcore.DatasetConfig" onTop="true" dataType="nc" dataDir="cfradial/moments/xband/vert" host="xpol" lateReference="26 Last Registration Time" lateDataSecs="1200" veryLateDataSecs="1800" xloc="580" yloc="426" status="STATUS_OKAY" priority="PRIORITY_HIGH" infoLink="" description="" />
+    <THING className="edu.ucar.rap.sysview.appcore.DatasetConfig" onTop="true" dataType="nc" dataDir="cfradial/moments/xband/sur" host="xpol" lateReference="26 Last Registration Time" lateDataSecs="1200" veryLateDataSecs="1800" xloc="373" yloc="425" status="STATUS_OKAY" priority="PRIORITY_HIGH" infoLink="" description="" />
+    <THING className="edu.ucar.rap.sysview.appcore.DatasetConfig" onTop="true" dataType="nc" dataDir="cfradial/moments/xband/rhi" host="xpol" lateReference="26 Last Registration Time" lateDataSecs="1200" veryLateDataSecs="1800" xloc="776" yloc="427" status="STATUS_OKAY" priority="PRIORITY_HIGH" infoLink="" description="" />
+    <THING className="edu.ucar.rap.sysview.appcore.FlowLineConfig" onTop="true" arrow="1" description="">
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="576" yloc="350" />
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="576" yloc="399" />
+    </THING>
+    <THING className="edu.ucar.rap.sysview.appcore.FlowLineConfig" onTop="true" arrow="1" description="">
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="575" yloc="200" />
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="575" yloc="225" />
+    </THING>
+    <THING className="edu.ucar.rap.sysview.appcore.FlowLineConfig" onTop="true" arrow="1" description="">
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="574" yloc="277" />
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="574" yloc="298" />
+    </THING>
+    <THING className="edu.ucar.rap.sysview.appcore.FlowLineConfig" onTop="true" arrow="1" description="">
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="572" yloc="350" />
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="376" yloc="398" />
+    </THING>
+    <THING className="edu.ucar.rap.sysview.appcore.FlowLineConfig" onTop="true" arrow="1" description="">
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="583" yloc="351" />
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="775" yloc="398" />
+    </THING>
+    <THING className="edu.ucar.rap.sysview.appcore.TextBoxConfig" onTop="false" xloc="575" yloc="535" width="600" height="100" color="0x60b0b0" font="Dialog-plain-12 " text=" " description="''''" />
+    <THING className="edu.ucar.rap.sysview.appcore.FlowLineConfig" onTop="true" arrow="1" description="">
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="371" yloc="450" />
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="371" yloc="515" />
+    </THING>
+    <THING className="edu.ucar.rap.sysview.appcore.FlowLineConfig" onTop="true" arrow="1" description="">
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="573" yloc="452" />
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="573" yloc="518" />
+    </THING>
+    <THING className="edu.ucar.rap.sysview.appcore.FlowLineConfig" onTop="true" arrow="1" description="">
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="771" yloc="453" />
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="771" yloc="516" />
+    </THING>
+    <THING className="edu.ucar.rap.sysview.appcore.AnnotationConfig" onTop="false" xloc="609" yloc="493" color="0x000000" font="Dialog-plain-12" annotation="vapor" description="" />
+    <THING className="edu.ucar.rap.sysview.appcore.AnnotationConfig" onTop="false" xloc="612" yloc="470" color="0x000000" font="Dialog-plain-12" annotation="DsFileDist" description="" />
+    <THING className="edu.ucar.rap.sysview.appcore.FlowLineConfig" onTop="true" arrow="1" description="">
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="630" yloc="250" />
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="710" yloc="250" />
+    </THING>
+  </DIAGRAM>
+  <DIAGRAM className="edu.ucar.rap.sysview.appcore.DiagramConfig" label="drx" xloc="172" yloc="166" windowX="272" windowY="445" windowWidth="869" windowHeight="553" status="STATUS_OKAY" priority="PRIORITY_HIGH" infoLink="" description="">
+    <THING className="edu.ucar.rap.sysview.appcore.ProcessConfig" onTop="true" processInstance=" " processName="xpold" host="drx" xloc="395" yloc="159" status="STATUS_DISABLED" priority="PRIORITY_HIGH" infoLink="" description="" />
+    <THING className="edu.ucar.rap.sysview.appcore.PolylineConfig" onTop="true" description="">
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="40" yloc="119" />
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="47" yloc="131" />
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="50" yloc="146" />
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="50" yloc="160" />
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="46" yloc="174" />
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="39" yloc="186" />
+    </THING>
+    <THING className="edu.ucar.rap.sysview.appcore.TextBoxConfig" onTop="false" xloc="144" yloc="100" width="88" height="50" color="0x909090" font="Dialog-plain-12" text="transmitter" description="''" />
+    <THING className="edu.ucar.rap.sysview.appcore.TextBoxConfig" onTop="false" xloc="393" yloc="200" width="180" height="320" color="0x4090a0" font="Dialog-plain-12 " text="." description="''" />
+    <THING className="edu.ucar.rap.sysview.appcore.TextBoxConfig" onTop="false" xloc="144" yloc="201" width="88" height="50" color="0x909090" font="Dialog-plain-12" text="receiver" description="''''" />
+    <THING className="edu.ucar.rap.sysview.appcore.FlowLineConfig" onTop="true" arrow="1" description="">
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="98" yloc="98" />
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="72" yloc="98" />
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="72" yloc="140" />
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="48" yloc="140" />
+    </THING>
+    <THING className="edu.ucar.rap.sysview.appcore.FlowLineConfig" onTop="true" arrow="1" description="">
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="50" yloc="158" />
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="70" yloc="158" />
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="70" yloc="202" />
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="100" yloc="202" />
+    </THING>
+    <THING className="edu.ucar.rap.sysview.appcore.ProcessConfig" onTop="true" processInstance=" " processName="xpol_control" host="drx" xloc="679" yloc="300" status="STATUS_DISABLED" priority="PRIORITY_HIGH" infoLink="" description="" />
+    <THING className="edu.ucar.rap.sysview.appcore.AnnotationConfig" onTop="false" xloc="541" yloc="289" color="0x000000" font="Dialog-plain-12" annotation="control commands" description="" />
+    <THING className="edu.ucar.rap.sysview.appcore.AnnotationConfig" onTop="false" xloc="140" yloc="144" color="0x000000" font="Dialog-plain-12" annotation="enable/disable" description="" />
+    <THING className="edu.ucar.rap.sysview.appcore.FlowLineConfig" onTop="true" arrow="2" description="">
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="141" yloc="126" />
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="141" yloc="177" />
+    </THING>
+    <THING className="edu.ucar.rap.sysview.appcore.FlowLineConfig" onTop="true" arrow="1" description="">
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="343" yloc="204" />
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="188" yloc="204" />
+    </THING>
+    <THING className="edu.ucar.rap.sysview.appcore.FlowLineConfig" onTop="true" arrow="3" description="">
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="341" yloc="99" />
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="187" yloc="99" />
+    </THING>
+    <THING className="edu.ucar.rap.sysview.appcore.AnnotationConfig" onTop="false" xloc="239" yloc="86" color="0x000000" font="Dialog-plain-12" annotation="serial" description="" />
+    <THING className="edu.ucar.rap.sysview.appcore.TextBoxConfig" onTop="false" xloc="685" yloc="300" width="180" height="140" color="0x4090a0" font="Dialog-plain-12 " text=" " description="''''" />
+    <THING className="edu.ucar.rap.sysview.appcore.AnnotationConfig" onTop="false" xloc="678" yloc="256" color="0x000000" font="Dialog-plain-12" annotation="XPOL Control GUI" description="" />
+    <THING className="edu.ucar.rap.sysview.appcore.TextBoxConfig" onTop="false" xloc="144" yloc="286" width="88" height="50" color="0x909090" font="Dialog-plain-12" text="pedestal" description="''''''" />
+    <THING className="edu.ucar.rap.sysview.appcore.FlowLineConfig" onTop="false" arrow="1" description="">
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="344" yloc="288" />
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="189" yloc="288" />
+    </THING>
+    <THING className="edu.ucar.rap.sysview.appcore.AnnotationConfig" onTop="false" xloc="244" yloc="190" color="0x000000" font="Dialog-plain-12" annotation="bus" description="" />
+    <THING className="edu.ucar.rap.sysview.appcore.AnnotationConfig" onTop="false" xloc="246" yloc="274" color="0x000000" font="Dialog-plain-12" annotation="serial" description="" />
+    <THING className="edu.ucar.rap.sysview.appcore.FlowLineConfig" onTop="true" arrow="3" description="">
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="626" yloc="304" />
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="393" yloc="304" />
+      <VERTEX className="edu.ucar.rap.sysview.appcore.VertexConfig" xloc="393" yloc="226" />
+    </THING>
+    <THING className="edu.ucar.rap.sysview.appcore.AnnotationConfig" onTop="false" xloc="545" yloc="311" color="0x000000" font="Dialog-plain-12" annotation="status" description="" />
+  </DIAGRAM>
+  <THING className="edu.ucar.rap.sysview.appcore.AnnotationConfig" onTop="true" xloc="322" yloc="-9" color="0x000000" font="Dialog-plain-12" annotation="raw ltg" description="" />
+  <THING className="edu.ucar.rap.sysview.appcore.AnnotationConfig" onTop="false" xloc="435" yloc="-14" color="0x000000" font="Dialog-plain-12" annotation="MDV radar" description="" />
+  <THING className="edu.ucar.rap.sysview.appcore.AnnotationConfig" onTop="true" xloc="246" yloc="99" color="0x000000" font="Dialog-plain-18" annotation="Signal processing" description="" />
+  <THING className="edu.ucar.rap.sysview.appcore.AnnotationConfig" onTop="true" xloc="414" yloc="40" color="0x000000" font="Dialog-bold-24" annotation="XPOL SYSTEM" description="" />
+</DIAGRAM>
+

@@ -1,0 +1,10 @@
+#! /bin/csh
+
+cd $PROJ_DIR/cal/params
+
+running "SunCal -params SunCal.xpol"
+if ($status == 1) then
+  SunCal -params SunCal.xpol |& \
+    LogFilter -d $ERRORS_LOG_DIR -p SunCal -i xpol &
+endif
+
