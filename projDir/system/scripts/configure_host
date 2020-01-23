@@ -54,10 +54,10 @@ fi
 
 # set directory paths
 
-cvs_dir=$BUILD_DIR
-cvs_xpol_dir=$cvs_dir/projects/xpol
-cvs_proj_dir=$cvs_xpol_dir/projDir
-system_dir=$cvs_proj_dir/system
+git_dir=$HOME/git
+git_xpol_dir=$git_dir/xpol-configuration
+git_proj_dir=$git_xpol_dir/projDir
+system_dir=$git_proj_dir/system
 
 #-- get current host type if possible -------------------------------
 #
@@ -126,10 +126,10 @@ backup_links_dir=$HOME/.backup_links
 /bin/rm -rf $backup_links_dir
 mkdir -p $backup_links_dir
 
-# make links to dotfiles in cvs
+# make links to dotfiles in git
 
 cd $HOME
-for dotfile in cshrc bashrc emacs cvsignore Xdefaults
+for dotfile in cshrc bashrc emacs Xdefaults
 do
     echo "/bin/mv -f .$dotfile $backup_links_dir"
     /bin/mv -f .$dotfile $backup_links_dir
@@ -140,15 +140,15 @@ done
 
 cd $HOME
 /bin/mv -f projDir $backup_links_dir
-ln -s $cvs_proj_dir
+ln -s $git_proj_dir
 
 ############################################
 # data dir - specific to the host type
-# copy data dir into /data/xpol
+# copy data dir into /d1/xpol
 #   which must be writable
 # make link to data dir
 
-default_data_dir=/data/xpol
+default_data_dir=/d1/xpol
 
 echo "Choose the data directory to use."
 echo "The data directory must already exist and"
@@ -156,11 +156,11 @@ echo "be writable.  Hit enter to use the default:"
 read -ep "    ......($default_data_dir)? " data_dir
 test "$data_dir" || data_dir=$default_data_dir
 
-cvs_data_dir=$cvs_xpol_dir/data_dirs/data.${host_type}
+git_data_dir=$git_xpol_dir/data_dirs/data.${host_type}
 inst_data_dir=${data_dir}/data.${host_type}
 
 cd $HOME/projDir
-/bin/cp -r $cvs_data_dir ${data_dir}
+/bin/cp -r $git_data_dir ${data_dir}
 /bin/mv -f data $backup_links_dir
 ln -s $inst_data_dir data
 

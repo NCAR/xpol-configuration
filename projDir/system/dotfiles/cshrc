@@ -21,10 +21,10 @@ setenv PRINTER color.gate.rtf
 
 setenv LANG C
 
-setenv HOST_OS LINUX_64
-setenv BUILD_DIR $HOME/cvs
-setenv RAP_MAKE_INC_DIR $BUILD_DIR/make_include
-setenv RAP_MAKE_BIN_DIR $BUILD_DIR/make_bin
+setenv HOST_OS LINUX_LROSE
+setenv BUILD_DIR $HOME/lrose
+setenv RAP_MAKE_INC_DIR $HOME/git/lrose-core/codebase/make_include
+setenv RAP_MAKE_BIN_DIR $HOME/git/lrose-core/codebase/make_bin
 setenv RAP_INC_DIR $BUILD_DIR/include
 setenv RAP_LIB_DIR $BUILD_DIR/lib
 setenv RAP_BIN_DIR $BUILD_DIR/bin
@@ -34,13 +34,6 @@ setenv RAP_SHARED_INC_DIR $BUILD_DIR/include
 setenv RAP_SHARED_LIB_DIR $BUILD_DIR/lib
 setenv RAP_SHARED_BIN_DIR $BUILD_DIR/bin
 
-# Note: options for HOST_OS environment variable are
-#  LINUX
-#  LINUX_64
-#  LINUX_64_32MODE
-#  DARWIN
-#  CYGWIN
-
 # CVS
 
 setenv CVSUSER dixon
@@ -48,24 +41,13 @@ setenv CVSROOT :pserver:${CVSUSER}@localhost:/cvs
 
 # --- OTHER BUILD SETTINGS
 
-setenv QTDIR /usr/lib/qt4
-
-setenv RVP8_INC_DIR $RAP_INC_DIR
-setenv RVP8_LIB_DIR $RAP_LIB_DIR
-setenv RVP8_BIN_DIR $RAP_BIN_DIR
-setenv REFR_BIN_DIR $RAP_BIN_DIR
-
 setenv FC gfortran
 setenv GCC_WARNINGS -Wall
 
 # --- LD run path --
 
-setenv LD_RUN_PATH $QTDIR/lib:/usr/local/lib:/usr/local/netcdf4/lib:
-setenv LD_LIBRARY_PATH /usr/local/lib
-
-# --- NCAR GRAPHICS ---
-
-setenv NCARG_ROOT /usr/local/ncarg
+#setenv LD_RUN_PATH $QTDIR/lib:/usr/local/lib:/usr/local/netcdf4/lib:
+#setenv LD_LIBRARY_PATH /usr/local/lib
 
 # --- JAVA ---
 
@@ -115,12 +97,6 @@ if ( -d $PROJ_DIR ) then
 endif
 
 if ($?BUILD_DIR) then
-  if ( -d $BUILD_DIR/bin64 ) then
-    set path = ($path $BUILD_DIR/bin64)
-  endif
-  if ( -d $BUILD_DIR/bin32 ) then
-    set path = ($path $BUILD_DIR/bin32)
-  endif
   if ( -d $BUILD_DIR/bin ) then
     set path = ($path $BUILD_DIR/bin)
   endif
@@ -131,7 +107,6 @@ set savehist=0
 set path = ($path ~/bin \
         /opt/local/bin \
 	$JAVA_HOME/bin $ANT_HOME/bin \
-	$NCARG_ROOT/bin \
 	/usr/local/xpol \
 	/usr/local/bin /usr/local/sbin /usr/bin/X11 \
         /usr/sbin /usr/bin /sbin /bin /usr/X11R6/bin \
@@ -177,6 +152,14 @@ if ($?prompt) then
   alias df 'df -h'
   set filec
   set fignore = (.o .ln)
+
+  alias gstat 'git status'
+  alias gcom 'git commit -am \!*'
+  alias gpush 'git push'
+  alias gpull 'git pull --ff-only'
+  alias gdiff 'git diff '
+  alias gdt 'git difftool -g -y '
+  alias glol 'git log --graph --decorate --pretty=oneline --abbrev-commit --all'
 
   alias catw 'cat `which \!*`'
   alias lessw 'less `which \!*`'
