@@ -1,0 +1,26 @@
+#! /bin/csh
+
+# copy the paxi file ($1) to drx. Use /tmp.
+
+set  paxi_file = $1
+
+scp $paxi_file drx:/tmp
+if ($status != 0) then
+    echo failed to copy $1 to drx. exiting ...
+    exit 1
+endif
+
+ssh drx 'paxcon -s drx -p 3000 -P < /tmp/paxi.txt'
+#ssh drx 'cat /tmp/paxi.txt'
+if ($status != 0) then
+    echo failed to run paxcon on drx. exiting ...
+    exit 1
+endif
+
+exit 0
+
+
+
+
+
+

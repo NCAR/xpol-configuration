@@ -1,0 +1,10 @@
+#! /bin/csh
+
+cd $PROJ_DIR/ingest/params
+
+running "XpolScanControl -params XpolScanControl.idwr_mode_2"
+if ($status == 1) then
+  XpolScanControl -params XpolScanControl.idwr_mode_2 |& \
+    LogFilter -d $ERRORS_LOG_DIR -p XpolScanControl -i idwr_mode_2 &
+endif
+
