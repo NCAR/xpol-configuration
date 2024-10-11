@@ -1,0 +1,10 @@
+#! /bin/csh
+
+cd $PROJ_DIR/ingest/params
+
+running "XpolScanControl -params XpolScanControl.ops_remote"
+if ($status == 1) then
+  XpolScanControl -params XpolScanControl.ops_remote |& \
+    LogFilter -d $ERRORS_LOG_DIR -p XpolScanControl -i ops_remote &
+endif
+

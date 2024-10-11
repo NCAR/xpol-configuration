@@ -37,6 +37,22 @@ setenv RAP_SHARED_BIN_DIR $LROSE_INSTALL_DIR/bin
 
 setenv SYS_LDFLAGS -L/usr/lib/x86_64-linux-gnu/hdf5/serial
 
+
+# local build envars for packages installed under /nrit/ral
+
+#setenv MY_ZLIB_INCS
+#setenv MY_SZIP_INCS
+#setenv MY_UDUNITS_INCS
+#setenv MY_HDF5_INCS 
+#setenv MY_NETCDF4_INCS
+
+#setenv MY_ZLIB_LIBS
+#setenv MY_SZIP_LIBS
+#setenv MY_UDUNITS_LIBS
+#setenv MY_HDF5_LIBS
+#setenv MY_NETCDF4_LIBS
+
+
 # CVS
 
 setenv CVSUSER dixon
@@ -114,7 +130,7 @@ set path = ($path ~/bin \
 	/usr/local/bin /usr/local/sbin /usr/bin/X11 \
         /usr/sbin /usr/bin /sbin /bin /usr/X11R6/bin \
 	/opt/gfortran/irun/bin /opt/spol/bin \
-        /usr/sigmet/bin /usr/sigmet/bin/rda $QTDIR/bin )
+        /usr/sigmet/bin /usr/sigmet/bin/rda  )
 
 # -- core files --
 # unlimit coredumpsize
@@ -218,6 +234,10 @@ if ($?prompt) then
   alias saveiso2dvd 'growisofs -dvd-compat -Z /dev/dvd='
 
 #    eval `dircolors ~/.dircolors`      # Set up color-ls variables.
+
+# ssh command for drx
+
+  alias drx 'ssh -XY  drx'
 
   setprompt
 

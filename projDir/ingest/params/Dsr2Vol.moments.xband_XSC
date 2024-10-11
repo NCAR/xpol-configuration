@@ -40,7 +40,7 @@ debug = DEBUG_VERBOSE;
 // Type: string
 //
 
-instance = "moments.xband";
+instance = "moments.xband_XSC";
 
 //======================================================================
 //
@@ -54,7 +54,7 @@ instance = "moments.xband";
 // Type: string
 //
 
-input_fmq_url = "$(DATA_DIR)/fmq/moments/xpol_raw";
+input_fmq_url = "$(DATA_DIR)/fmq/moments/xpol";
 
 ///////////// seek_to_end_of_input ////////////////////
 //
@@ -1176,7 +1176,7 @@ cart_files = {
     minz = 0.5,
     dz = 1,
     interpolate = TRUE,
-    mdv_url = "$(DATA_DIR)/mdv/moments/xband/cart",
+    mdv_url = "$(DATA_DIR)/mdv/moments/xband/cart_XSC",
     max_range = -1
   }
 };
@@ -1229,7 +1229,7 @@ ppi_files = {
     min_elev = 0,
     max_elev = 90,
     interpolate = FALSE,
-    mdv_url = "$(DATA_DIR)/mdv/moments/xband/ppi",
+    mdv_url = "$(DATA_DIR)/mdv/moments/xband/ppi_XSC",
     min_ht = 0,
     max_ht = 50,
     max_range = -1
@@ -1272,7 +1272,7 @@ polar_files = {
     max_range = 300,
     min_elev = 0,
     max_elev = 90,
-    mdv_url = "$(DATA_DIR)/mdv/moments/xband/polar"
+    mdv_url = "$(DATA_DIR)/mdv/moments/xband/polar_XSC"
   }
 };
 
@@ -1460,7 +1460,7 @@ rhi_files = {
   {
     oversampling_ratio = 4,
     interp_in_elevation = FALSE,
-    mdv_url = "$(DATA_DIR)/mdv/moments/xband/polar/rhi"
+    mdv_url = "$(DATA_DIR)/mdv/moments/xband/polar/rhi_XSC"
   }
 };
 
@@ -1576,7 +1576,7 @@ rhi_cart_files = {
     minz = 0.5,
     dz = 1,
     interpolate = TRUE,
-    mdv_url = "$(DATA_DIR)/mdv/moments/xband/cart/rhi",
+    mdv_url = "$(DATA_DIR)/mdv/moments/xband/cart/rhi_XSC",
     max_range = -1
   }
 };

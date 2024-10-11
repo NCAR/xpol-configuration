@@ -14,7 +14,8 @@ DsFileDist    ops        start_DsFileDist.ops      kill_DataMapper   localhost
 ProSensing2Dsr   xpol      start_ProSensing2Dsr.xpol     snuff_inst localhost
 Dsr2Radx  moments.xband    start_Dsr2Radx.moments.xband  snuff_inst localhost
 Dsr2Vol   moments.xband    start_Dsr2Vol.moments.xband   snuff_inst localhost
-XpolScanControl  ops       start_XpolScanControl.ops     snuff_inst localhost
+#XpolScanControl  ops       start_XpolScanControl.ops     snuff_inst localhost
+#XpolScanControl  test      start_XpolScanControl.test     snuff_inst localhost
 #
 ###############################################################################
 # SunCal

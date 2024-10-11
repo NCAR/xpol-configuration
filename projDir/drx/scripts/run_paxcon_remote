@@ -1,8 +1,10 @@
 #! /bin/csh
 
-# copy the paxi file ($1) to drx. Use /tmp.
+# copy the paxi file ($1) to drx. Copy file to /tmp on drx.
 
 set  paxi_file = $1
+
+echo $paxi_file
 
 scp $paxi_file drx:/tmp
 if ($status != 0) then
@@ -10,8 +12,11 @@ if ($status != 0) then
     exit 1
 endif
 
-ssh drx 'paxcon -s drx -p 3000 -P < /tmp/paxi.txt'
-#ssh drx 'cat /tmp/paxi.txt'
+# logs written to /usr/local/prosensing/log/paxcon.log
+#ssh drx "paxcon -s drx -p 3000 -P -f /tmp/${1}"
+#echo ssh drx "paxcon -s drx -p 3000 -P -f /tmp/${1}"
+
+ssh drx "cat ${1}"
 if ($status != 0) then
     echo failed to run paxcon on drx. exiting ...
     exit 1
