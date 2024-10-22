@@ -40,7 +40,7 @@ debug = DEBUG_NORM;
 // Type: string
 //
 
-instance = "ops";
+instance = "ops.marshall";
 
 ///////////// register_with_procmap ///////////////////
 //
@@ -471,7 +471,7 @@ default_antenna_speed = 15;
 // Type: string
 //
 
-upload_paxi_script_name = "run_paxcon";
+upload_paxi_script_name = "run_paxcon_remote";
 
 ///////////// paxi_file_path //////////////////////////
 //

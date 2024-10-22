@@ -6,21 +6,21 @@ set  paxi_file = $1
 
 echo $paxi_file
 
-scp $paxi_file drx:/tmp
+rsync -av $paxi_file drx:/tmp
 if ($status != 0) then
     echo failed to copy $1 to drx. exiting ...
     exit 1
 endif
 
 # logs written to /usr/local/prosensing/log/paxcon.log
-#ssh drx "paxcon -s drx -p 3000 -P -f /tmp/${1}"
-#echo ssh drx "paxcon -s drx -p 3000 -P -f /tmp/${1}"
+echo ssh drx "paxcon -s drx -p 3000 -P -f ${1}"
+ssh drx "paxcon -s drx -p 3000 -P -f ${1}"
 
-ssh drx "cat ${1}"
-if ($status != 0) then
-    echo failed to run paxcon on drx. exiting ...
-    exit 1
-endif
+#ssh drx "cat ${1}"
+#if ($status != 0) then
+#    echo failed to run paxcon on drx. exiting ...
+#    exit 1
+#endif
 
 exit 0
 
