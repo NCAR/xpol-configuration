@@ -1,7 +1,5 @@
 #! /bin/csh
 
-setenv PROJ_DIR ~/cvs/projects/xpol/projDir
-
 cd $PROJ_DIR/display/params
 
 HawkEye -params HawkEye.xpol >& /dev/null &

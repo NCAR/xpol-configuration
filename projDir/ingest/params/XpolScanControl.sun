@@ -358,7 +358,7 @@ transition_angle_tolerance = 0.25;
 // Type: double
 //
 
-azimuth_correction_deg = -43.15;
+azimuth_correction_deg = -110.0;
 
 ///////////// sector_widen_secs ///////////////////////
 //
@@ -409,7 +409,7 @@ default_antenna_speed = 15;
 // Type: string
 //
 
-upload_paxi_script_name = "run_paxcon";
+upload_paxi_script_name = "run_paxcon_remote";
 
 ///////////// paxi_file_path //////////////////////////
 //

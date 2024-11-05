@@ -107,7 +107,7 @@ override_radar_name = TRUE;
 // Type: string
 //
 
-radar_name = "XPOL-FL";
+radar_name = "XPOL-MARSHALL";
 
 ///////////// override_radar_location /////////////////
 //
@@ -117,7 +117,7 @@ radar_name = "XPOL-FL";
 // Type: boolean
 //
 
-override_radar_location = FALSE;
+override_radar_location = TRUE;
 
 ///////////// radar_latitude_deg //////////////////////
 //
@@ -126,7 +126,7 @@ override_radar_location = FALSE;
 // Type: double
 //
 
-radar_latitude_deg = 39.9321;
+radar_latitude_deg = 39.95;
 
 ///////////// radar_longitude_deg /////////////////////
 //
@@ -135,7 +135,7 @@ radar_latitude_deg = 39.9321;
 // Type: double
 //
 
-radar_longitude_deg = -105.182;
+radar_longitude_deg = -105.1945;
 
 ///////////// radar_altitude_meters ///////////////////
 //

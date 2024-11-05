@@ -33,7 +33,7 @@
 //     DEBUG_EXTRA
 //
 
-debug = DEBUG_VERBOSE;
+debug = DEBUG_NORM;
 
 ///////////// instance ////////////////////////////////
 //
@@ -45,7 +45,7 @@ debug = DEBUG_VERBOSE;
 // Type: string
 //
 
-instance = "idwr_mode_1";
+instance = "idwr_seq_4";
 
 ///////////// register_with_procmap ///////////////////
 //
@@ -364,62 +364,16 @@ drx_conf = {
 scan_sequence = {
   {
     drx_conf_id = 0,
-    scan_mode = SCAN_MODE_SURVEILLANCE,
-    az_rate_deg_per_sec = 10,
-    el_rate_deg_per_sec = 10,
+    scan_mode = SCAN_MODE_VERTICAL_POINTING,
+    az_rate_deg_per_sec = 6,
+    el_rate_deg_per_sec = 6,
     start_az_deg = 0,
     end_az_deg = 360,
     delta_az_deg = 1,
-    start_el_deg = 0.5,
-    end_el_deg = 2.5,
-    delta_el_deg = 0.5,
-    n_sweeps = 1,
-    transition_tolerance_deg = 0.1,
-    nsecs_wait = 0
-  }
-  {
-    drx_conf_id = 0,
-    scan_mode = SCAN_MODE_SURVEILLANCE,
-    az_rate_deg_per_sec = 10,
-    el_rate_deg_per_sec = 10,
-    start_az_deg = 0,
-    end_az_deg = 360,
-    delta_az_deg = 1,
-    start_el_deg = 3.0,
-    end_el_deg = 6.0,
+    start_el_deg = 89.0,
+    end_el_deg = 89.0,
     delta_el_deg = 1.0,
-    n_sweeps = 1,
-    transition_tolerance_deg = 0.1,
-    nsecs_wait = 0
-  }
-  ,
-  {
-    drx_conf_id = 0,
-    scan_mode = SCAN_MODE_SURVEILLANCE,
-    az_rate_deg_per_sec = 10,
-    el_rate_deg_per_sec = 10,
-    start_az_deg = 0,
-    end_az_deg = 360,
-    delta_az_deg = 1,
-    start_el_deg = 6.0,
-    end_el_deg = 8.0,
-    delta_el_deg = 2.0,
-    n_sweeps = 1,
-    transition_tolerance_deg = 0.1,
-    nsecs_wait = 0
-  }
-  {
-    drx_conf_id = 0,
-    scan_mode = SCAN_MODE_SURVEILLANCE,
-    az_rate_deg_per_sec = 10,
-    el_rate_deg_per_sec = 10,
-    start_az_deg = 0,
-    end_az_deg = 360,
-    delta_az_deg = 1,
-    start_el_deg = 10.0,
-    end_el_deg = 25.0,
-    delta_el_deg = 5.0,
-    n_sweeps = 1,
+    n_sweeps = 3,
     transition_tolerance_deg = 0.1,
     nsecs_wait = 0
   }
@@ -464,7 +418,7 @@ transition_angle_tolerance = 0.2;
 // Type: double
 //
 
-azimuth_correction_deg = 0;
+azimuth_correction_deg = -110.0;
 
 ///////////// sector_widen_secs ///////////////////////
 //

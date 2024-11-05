@@ -28,7 +28,7 @@
 //     DEBUG_VERBOSE
 //     DEBUG_EXTRA
 
-debug = DEBUG_OFF;
+debug = DEBUG_VERBOSE;
 
 ///////////// instance ////////////////////////////////
 //
@@ -445,7 +445,7 @@ get_location_from_data = FALSE;
 //
 // Type: double
 
-radar_lat = 0;
+radar_lat = 39.95;
 
 ///////////// radar_lon ///////////////////////////////
 //
@@ -455,7 +455,7 @@ radar_lat = 0;
 //
 // Type: double
 
-radar_lon = 0;
+radar_lon = 105.1946;
 
 ///////////// radar_alt_km ////////////////////////////
 //
@@ -463,7 +463,7 @@ radar_lon = 0;
 //
 // Type: double
 
-radar_alt_km = 0;
+radar_alt_km = 1.744;
 
 //======================================================================
 //

@@ -98,7 +98,8 @@ input_mode = DSR_FMQ_INPUT;
 //
 // Type: string
 
-input_fmq_url = "$(DATA_DIR)/fmq/moments/xpol_raw";
+//input_fmq_url = "$(DATA_DIR)/fmq/moments/xpol_raw";
+input_fmq_url = "$(DATA_DIR)/fmq/moments/xpol";
 
 ///////////// seek_to_start_of_fmq ////////////////////
 //

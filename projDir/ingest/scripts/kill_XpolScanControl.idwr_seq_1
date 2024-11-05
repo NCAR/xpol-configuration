@@ -1,0 +1,4 @@
+#! /bin/csh
+
+snuff_inst XpolScanControl idwr_seq_1
+

@@ -33,7 +33,7 @@
 //     DEBUG_EXTRA
 //
 
-debug = DEBUG_VERBOSE;
+debug = DEBUG_NORM;
 
 ///////////// instance ////////////////////////////////
 //
@@ -45,7 +45,7 @@ debug = DEBUG_VERBOSE;
 // Type: string
 //
 
-instance = "idwr_mode_3";
+instance = "idwr_seq_0";
 
 ///////////// register_with_procmap ///////////////////
 //
@@ -243,26 +243,11 @@ data_mapper_report_interval = 5;
 //
 
 drx_conf = {
-  {
+   {   
     conf_id = 0,
     proc_mode = PROC_MODE_PULSE_PAIR,
-    pri_1_usec = 1000,
-    pri_2_usec = 1000,
-    group_interval_usec = 2000,
-    n_gates = 800,
-    clutter_n_ave = 32,
-    post_n_ave = 1,
-    range_res = RANGE_RES_75_m,
-    pulse_len = PULSE_LEN_75_m,
-    filter_bw = FILTER_BW_2_mhz,
-    use_clutter_filter = FALSE
-  }
-  ,
-  {
-    conf_id = 1,
-    proc_mode = PROC_MODE_DUAL_PULSE_PAIR,
-    pri_1_usec = 1000,
-    pri_2_usec = 1500,
+    pri_1_usec = 500,
+    pri_2_usec = 500,
     group_interval_usec = 2000,
     n_gates = 800,
     clutter_n_ave = 32,
@@ -365,81 +350,82 @@ scan_sequence = {
   {
     drx_conf_id = 0,
     scan_mode = SCAN_MODE_SURVEILLANCE,
-    az_rate_deg_per_sec = 6,
-    el_rate_deg_per_sec = 6,
+    az_rate_deg_per_sec = 10,
+    el_rate_deg_per_sec = 10,
     start_az_deg = 0,
     end_az_deg = 360,
     delta_az_deg = 1,
-    start_el_deg = 2.0,
-    end_el_deg = 4.0,
+    start_el_deg = 1,
+    end_el_deg = 3,
     delta_el_deg = 2.0,
-    n_sweeps = 1,
-    transition_tolerance_deg = 0.1,
-    nsecs_wait = 0
-  }
-  {
-    drx_conf_id = 0,
-    scan_mode = SCAN_MODE_SECTOR,
-    az_rate_deg_per_sec = 4,
-    el_rate_deg_per_sec = 4,
-    start_az_deg = 255,
-    end_az_deg = 295,
-    delta_az_deg = 1,
-    start_el_deg = 0.5,
-    end_el_deg = 4.0,
-    delta_el_deg = 0.5,
-    n_sweeps = 1,
+    n_sweeps = 2,
     transition_tolerance_deg = 0.1,
     nsecs_wait = 0
   }
   ,
   {
     drx_conf_id = 0,
-    scan_mode = SCAN_MODE_SECTOR,
-    az_rate_deg_per_sec = 4,
-    el_rate_deg_per_sec = 4,
-    start_az_deg = 255,
-    end_az_deg = 295,
-    delta_az_deg = 1,
-    start_el_deg = 5.0,
-    end_el_deg = 25.0,
-    delta_el_deg = 5.0,
-    n_sweeps = 1,
-    transition_tolerance_deg = 0.1,
-    nsecs_wait = 0
-  }
-  ,
-  {
-    drx_conf_id = 0,
-    scan_mode = SCAN_MODE_RHI,
-    az_rate_deg_per_sec = 4,
-    el_rate_deg_per_sec = 4,
-    start_az_deg = 265.0,
-    end_az_deg = 285.0,
-    delta_az_deg = 5.0,
-    start_el_deg = 0.5,
-    end_el_deg = 45.0,
-    delta_el_deg = 1.0,
-    n_sweeps = 1,
-    transition_tolerance_deg = 0.1,
-    nsecs_wait = 0
-  }
-  ,
-  {
-    drx_conf_id = 0,
-    scan_mode = SCAN_MODE_VERTICAL_POINTING,
-    az_rate_deg_per_sec = 6.0,
-    el_rate_deg_per_sec = 6.0,
+    scan_mode = SCAN_MODE_SURVEILLANCE,
+    az_rate_deg_per_sec = 10,
+    el_rate_deg_per_sec = 10,
     start_az_deg = 0,
     end_az_deg = 360,
     delta_az_deg = 1,
-    start_el_deg = 10.0,
-    end_el_deg = 25.0,
-    delta_el_deg = 5.0,
-    n_sweeps = 10,
+    start_el_deg = 5.3,
+    end_el_deg = 11.3,
+    delta_el_deg = 2,
+    n_sweeps = 4,
     transition_tolerance_deg = 0.1,
     nsecs_wait = 0
   }
+  ,
+  {
+    drx_conf_id = 0,
+    scan_mode = SCAN_MODE_SURVEILLANCE,
+    az_rate_deg_per_sec = 10,
+    el_rate_deg_per_sec = 10,
+    start_az_deg = 0,
+    end_az_deg = 360,
+    delta_az_deg = 1,
+    start_el_deg = 13,
+    end_el_deg = 19,
+    delta_el_deg = 2,
+    n_sweeps = 4,
+    transition_tolerance_deg = 0.1,
+    nsecs_wait = 0
+  }
+  ,
+  {
+    drx_conf_id = 0,
+    scan_mode = SCAN_MODE_SURVEILLANCE,
+    az_rate_deg_per_sec = 10,
+    el_rate_deg_per_sec = 10,
+    start_az_deg = 0,
+    end_az_deg = 360,
+    delta_az_deg = 1,
+    start_el_deg = 22.0,
+    end_el_deg = 28,
+    delta_el_deg = 3,
+    n_sweeps = 3,
+    transition_tolerance_deg = 0.1,
+    nsecs_wait = 0
+  }
+  ,
+  {
+    drx_conf_id = 0,
+    scan_mode = SCAN_MODE_SURVEILLANCE,
+    az_rate_deg_per_sec = 10,
+    el_rate_deg_per_sec = 10,
+    start_az_deg = 0,
+    end_az_deg = 360,
+    delta_az_deg = 1,
+    start_el_deg = 32,
+    end_el_deg = 37,
+    delta_el_deg = 5,
+    n_sweeps = 2,
+    transition_tolerance_deg = 0.1,
+    nsecs_wait = 0
+}
 };
 
 ///////////// requested_angle_tolerance ///////////////
@@ -481,7 +467,7 @@ transition_angle_tolerance = 0.2;
 // Type: double
 //
 
-azimuth_correction_deg = 0;
+azimuth_correction_deg = -110.0;
 
 ///////////// sector_widen_secs ///////////////////////
 //

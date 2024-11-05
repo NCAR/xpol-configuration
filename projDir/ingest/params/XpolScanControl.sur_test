@@ -33,7 +33,7 @@
 //     DEBUG_EXTRA
 //
 
-debug = DEBUG_VERBOSE;
+debug = DEBUG_NORM;
 
 ///////////// instance ////////////////////////////////
 //
@@ -45,7 +45,7 @@ debug = DEBUG_VERBOSE;
 // Type: string
 //
 
-instance = "idwr_mode_2";
+instance = "sur_test";
 
 ///////////// register_with_procmap ///////////////////
 //
@@ -370,89 +370,10 @@ scan_sequence = {
     start_az_deg = 0,
     end_az_deg = 360,
     delta_az_deg = 1,
-    start_el_deg = 2.0,
-    end_el_deg = 4.0,
-    delta_el_deg = 2.0,
-    n_sweeps = 1,
-    transition_tolerance_deg = 0.1,
-    nsecs_wait = 0
-  }
-  {
-    drx_conf_id = 0,
-    scan_mode = SCAN_MODE_SECTOR,
-    az_rate_deg_per_sec = 4,
-    el_rate_deg_per_sec = 4,
-    start_az_deg = 30,
-    end_az_deg = 70,
-    delta_az_deg = 1,
-    start_el_deg = 0.5,
-    end_el_deg = 0.5,
-    delta_el_deg = 0.0,
-    n_sweeps = 1,
-    transition_tolerance_deg = 0.1,
-    nsecs_wait = 0
-  }
-  ,
-  {
-    drx_conf_id = 0,
-    scan_mode = SCAN_MODE_SECTOR,
-    az_rate_deg_per_sec = 4,
-    el_rate_deg_per_sec = 4,
-    start_az_deg = 30,
-    end_az_deg = 70,
-    delta_az_deg = 1,
-    start_el_deg = 1.0,
-    end_el_deg = 3.0,
-    delta_el_deg = 1.0,
-    n_sweeps = 1,
-    transition_tolerance_deg = 0.1,
-    nsecs_wait = 0
-  }
-  ,
-  {
-    drx_conf_id = 0,
-    scan_mode = SCAN_MODE_SECTOR,
-    az_rate_deg_per_sec = 4,
-    el_rate_deg_per_sec = 4,
-    start_az_deg = 30,
-    end_az_deg = 70,
-    delta_az_deg = 1,
     start_el_deg = 5.0,
     end_el_deg = 20.0,
     delta_el_deg = 5.0,
-    n_sweeps = 1,
-    transition_tolerance_deg = 0.1,
-    nsecs_wait = 0
-  }
-  ,
-  {
-    drx_conf_id = 0,
-    scan_mode = SCAN_MODE_RHI,
-    az_rate_deg_per_sec = 4,
-    el_rate_deg_per_sec = 4,
-    start_az_deg = 30.0,
-    end_az_deg = 70.0,
-    delta_az_deg = 5.0,
-    start_el_deg = 0.5,
-    end_el_deg = 40.0,
-    delta_el_deg = 1.0,
-    n_sweeps = 1,
-    transition_tolerance_deg = 0.1,
-    nsecs_wait = 0
-  }
-  ,
-  {
-    drx_conf_id = 0,
-    scan_mode = SCAN_MODE_VERTICAL_POINTING,
-    az_rate_deg_per_sec = 6.0,
-    el_rate_deg_per_sec = 6.0,
-    start_az_deg = 0,
-    end_az_deg = 360,
-    delta_az_deg = 1,
-    start_el_deg = 10.0,
-    end_el_deg = 25.0,
-    delta_el_deg = 5.0,
-    n_sweeps = 10,
+    n_sweeps = 4,
     transition_tolerance_deg = 0.1,
     nsecs_wait = 0
   }
@@ -497,7 +418,7 @@ transition_angle_tolerance = 0.2;
 // Type: double
 //
 
-azimuth_correction_deg = 0;
+azimuth_correction_deg = -110.0;
 
 ///////////// sector_widen_secs ///////////////////////
 //

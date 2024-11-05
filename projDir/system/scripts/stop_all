@@ -29,6 +29,10 @@ kill_SymprodServers
 killall_processes
 kill_SysView
 
+# kill rogue instances of RadMon and XpolScanControl
+snuff RadMon
+snuff XpolScanControl
+
 # remove shared memory segments
 
 ipcrm_linux

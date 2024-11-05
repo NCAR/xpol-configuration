@@ -13,10 +13,10 @@ if ($status != 0) then
 endif
 
 # logs written to /usr/local/prosensing/log/paxcon.log
-echo ssh drx "paxcon -s drx -p 3000 -P -f ${1}"
+ssh drx "cat ${1}"
 ssh drx "paxcon -s drx -p 3000 -P -f ${1}"
 
-#ssh drx "cat ${1}"
+
 #if ($status != 0) then
 #    echo failed to run paxcon on drx. exiting ...
 #    exit 1
